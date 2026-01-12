@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công nghệ kháng khuẩn cho máy lọc nước M25</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Calibri', 'Arial', sans-serif;
+            background: #1a1a1a;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 1280px;
+            height: 720px;
+            background: #ffffff;
+            position: relative;
+            padding: 60px 80px;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Slide 1 - Cover */
+        .slide-cover {
+            background: linear-gradient(135deg, #4472c4 0%, #5b9bd5 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide-cover h1 {
+            font-size: 54px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            color: white;
+        }
+
+        .slide-cover .subtitle {
+            font-size: 28px;
+            margin-bottom: 50px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .slide-cover .info {
+            font-size: 20px;
+            margin: 12px 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .slide-cover .quote {
+            margin-top: 60px;
+            font-size: 22px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 25px 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 5px solid white;
+            max-width: 900px;
+        }
+
+        /* Other slides */
+        .slide h2 {
+            font-size: 44px;
+            font-weight: bold;
+            color: #2e75b6;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2e75b6;
+        }
+
+        .slide-content {
+            font-size: 24px;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .slide-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .slide-content li {
+            margin: 18px 0;
+            padding-left: 35px;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .slide-content li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-size: 32px;
+            color: #2e75b6;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .slide-content li strong {
+            color: #2e75b6;
+            font-weight: bold;
+        }
+
+        /* Slide 5 - Steps */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .step {
+            background: #e7f3ff;
+            border: 2px solid #2e75b6;
+            padding: 25px 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .step-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2e75b6;
+            margin-bottom: 15px;
+        }
+
+        .step-text {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            margin-top: 40px;
+            padding: 20px 30px;
+            background: #fff4e6;
+            border-left: 5px solid #ff9800;
+            font-size: 22px;
+            color: #333;
+        }
+
+        /* Slide 6 - Solutions */
+        .solution-box {
+            background: #f0f0f0;
+            padding: 25px 30px;
+            margin: 20px 0;
+            border-left: 6px solid #4472c4;
+            border-radius: 4px;
+        }
+
+        .solution-box.priority {
+            background: #fff4e6;
+            border-left-color: #ff9800;
+        }
+
+        .solution-box.max {
+            background: #f3e5f5;
+            border-left-color: #9c27b0;
+        }
+
+        .solution-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2e75b6;
+            margin-bottom: 8px;
+        }
+
+        .solution-desc {
+            font-size: 20px;
+            color: #555;
+        }
+
+        .message-box {
+            margin-top: 30px;
+            padding: 20px 30px;
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            font-size: 22px;
+            color: #333;
+        }
+
+        /* Slide 7 - Timeline */
+        .timeline {
+            margin: 40px 0;
+        }
+
+        .timeline-bar {
+            height: 80px;
+            background: linear-gradient(90deg, #4472c4 0%, #5b9bd5 50%, #70ad47 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .timeline-milestone {
+            text-align: center;
+            color: white;
+        }
+
+        .timeline-milestone .month {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .timeline-milestone .activity {
+            font-size: 18px;
+        }
+
+        /* Slide 9 - Risks */
+        .risk-control {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .risk-box, .control-box {
+            padding: 25px;
+            border-radius: 6px;
+        }
+
+        .risk-box {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+        }
+
+        .control-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+
+        .risk-title, .control-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .risk-desc, .control-desc {
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* Diagram placeholder */
+        .diagram-placeholder {
+            background: #e3f2fd;
+            border: 2px dashed #2196f3;
+            border-radius: 6px;
+            padding: 50px;
+            text-align: center;
+            margin: 30px 0;
+            color: #1976d2;
+            font-style: italic;
+            font-size: 20px;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .presentation-container:hover .nav-controls {
+            opacity: 1;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #2e75b6;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2e75b6;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: #2e75b6;
+            color: white;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        /* Fullscreen mode */
+        .fullscreen .slide {
+            width: 100vw;
+            height: 100vh;
+            padding: 80px 100px;
+        }
+
+        .fullscreen .slide h2 {
+            font-size: 48px;
+        }
+
+        .fullscreen .slide-content {
+            font-size: 28px;
+        }
+
+        .fullscreen .slide-cover h1 {
+            font-size: 64px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .slide {
+                width: 90vw;
+                height: 50.625vw;
+                max-height: 90vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h2 {
+                font-size: 32px;
+            }
+
+            .slide-content {
+                font-size: 18px;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-control {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Help text */
+        .help-text {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .presentation-container:hover .help-text {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container" id="presentation">
+        <div class="help-text">
+            ← → Điều hướng | F Fullscreen | ESC Thoát
+        </div>
+
+        <!-- Slide 1: Cover -->
+        <div class="slide slide-cover active">
+            <h1>Công nghệ kháng khuẩn cho máy lọc nước M25</h1>
+            <div class="subtitle">(Giảm tái nhiễm sau RO)</div>
+            <div class="info"><strong>Nhóm Talent25:</strong> … | <strong>Mentor:</strong> …</div>
+            <div class="info"><strong>Trưởng nhóm:</strong> … | <strong>Thành viên:</strong> …</div>
+            <div class="info"><strong>Thời gian triển khai:</strong> … (6 tháng)</div>
+            <div class="quote">
+                "Đề tài tập trung vào giảm tái nhiễm vi sinh ở đoạn sau RO — phần dễ phát sinh biofilm và khiếu nại."
+            </div>
+        </div>
+
+        <!-- Slide 2: Bối cảnh & Lý do chọn đề tài -->
+        <div class="slide">
+            <h2>Bối cảnh & Lý do chọn đề tài</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>RO tốt, nhưng tái nhiễm thường xảy ra ở đoạn sau RO (bình/ống/vòi).</li>
+                    <li>Điểm rủi ro: đầu vòi hở, nước đứng, đường ống → biofilm.</li>
+                    <li>Ảnh hưởng: mùi/vị, mất niềm tin, tăng bảo hành/khiếu nại.</li>
+                    <li>Vì sao làm: "điểm yếu phổ biến" → có cơ hội tạo khác biệt cho M25.</li>
+                </ul>
+                <div class="diagram-placeholder">
+                    Sơ đồ 1 đường nước, khoanh đỏ "bình – ống – vòi"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Mục tiêu -->
+        <div class="slide">
+            <h2>Mục tiêu</h2>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Mục tiêu tổng:</strong> giảm tái nhiễm vi sinh sau RO trên M25.</li>
+                    <li><strong>Đầu ra:</strong> 1 cấu hình khả thi + 1 cấu hình dự phòng (để chọn).</li>
+                    <li>Có kế hoạch thử nghiệm xác nhận (test plan) + tiêu chí pass/fail.</li>
+                    <li>Hoàn thành trong 6 tháng, có mốc báo cáo theo tháng.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Phạm vi & Đối tượng áp dụng -->
+        <div class="slide">
+            <h2>Phạm vi & Đối tượng áp dụng</h2>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Đối tượng:</strong> M25 – nhánh nước sạch sau RO.</li>
+                    <li><strong>Phạm vi:</strong> giải pháp cuối nguồn (bình/ống/vòi/nhánh ra vòi).</li>
+                    <li><strong>Không mở rộng:</strong> thay đổi RO/platform khác.</li>
+                    <li><strong>Giới hạn:</strong> ưu tiên phương án ít thay đổi kết cấu, dễ tích hợp.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5: Cách làm (Phương pháp) -->
+        <div class="slide">
+            <h2>Cách làm (Phương pháp)</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Xác định điểm tái nhiễm</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Benchmark công nghệ</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Chọn 2 phương án khả thi</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Prototype tích hợp</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-text">Test xác nhận & chốt đề xuất</div>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <strong>Điểm mạnh dự án:</strong> có đường đi rõ ràng và có tiêu chí test để chốt quyết định.
+            </div>
+        </div>
+
+        <!-- Slide 6: Các phương án giải pháp -->
+        <div class="slide">
+            <h2>Các phương án giải pháp (Tổng thể)</h2>
+            <div class="slide-content">
+                <div class="solution-box priority">
+                    <div class="solution-title">PA1 (Ưu tiên): Barrier + UVC</div>
+                    <div class="solution-desc">Chặn + diệt khuẩn cuối nguồn</div>
+                </div>
+                <div class="solution-box">
+                    <div class="solution-title">PA2: Vật liệu kháng khuẩn + Barrier</div>
+                    <div class="solution-desc">Ức chế biofilm + chặn cơ học</div>
+                </div>
+                <div class="solution-box max">
+                    <div class="solution-title">PA3 (Max): Kháng khuẩn + Barrier + UVC</div>
+                    <div class="solution-desc">Hiệu quả cao, BOM cao</div>
+                </div>
+                <div class="message-box">
+                    <strong>Thông điệp chốt:</strong> Dự án sẽ chọn 1 PA làm prototype chính + 1 PA dự phòng để so sánh.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Phương án đề xuất triển khai + Nguồn lực/Ngân sách -->
+        <div class="slide">
+            <h2>Phương án đề xuất triển khai + Nguồn lực/Ngân sách</h2>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Chọn PA1 làm prototype chính</strong> (lý do: tác động trực tiếp ở cuối nguồn, dễ đo hiệu quả).</li>
+                    <li><strong>Các hạng mục cần:</strong> module UVC / màng chặn / cụm lắp + hướng dẫn thay thế.</li>
+                    <li><strong>Nguồn lực:</strong> R&D + DQA + Mua hàng + Thiết kế cơ khí/điện.</li>
+                    <li><strong>Ngân sách:</strong> mẫu vật tư + test vi sinh (+ chi phí test ngoài nếu cần).</li>
+                </ul>
+                <div class="timeline">
+                    <div class="timeline-bar">
+                        <div class="timeline-milestone">
+                            <div class="month">M1-M2</div>
+                            <div class="activity">Thiết kế</div>
+                        </div>
+                        <div class="timeline-milestone">
+                            <div class="month">M3-M4</div>
+                            <div class="activity">Test vòng 1</div>
+                        </div>
+                        <div class="timeline-milestone">
+                            <div class="month">M5-M6</div>
+                            <div class="activity">Tối ưu & chốt</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Giá trị mang lại -->
+        <div class="slide">
+            <h2>Giá trị mang lại</h2>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Chất lượng:</strong> giảm nguy cơ tái nhiễm, ổn định trải nghiệm nước uống.</li>
+                    <li><strong>Thị trường:</strong> tăng điểm khác biệt "kháng khuẩn cuối nguồn".</li>
+                    <li><strong>Vận hành:</strong> giảm khiếu nại liên quan mùi/biofilm.</li>
+                    <li><strong>Tổ chức:</strong> tạo bộ tiêu chí test chuẩn để áp dụng cho các model sau.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: Rủi ro & Biện pháp kiểm soát -->
+        <div class="slide">
+            <h2>Rủi ro & Biện pháp kiểm soát</h2>
+            <div class="slide-content">
+                <div class="risk-control">
+                    <div class="risk-box">
+                        <div class="risk-title">R1: Tích hợp UVC</div>
+                        <div class="risk-desc">(không gian/điện/nhiệt)</div>
+                    </div>
+                    <div class="control-box">
+                        <div class="control-title">K1: Chọn module chuẩn</div>
+                        <div class="control-desc">+ thiết kế che chắn</div>
+                    </div>
+                </div>
+                <div class="risk-control">
+                    <div class="risk-box">
+                        <div class="risk-title">R2: Giảm lưu lượng</div>
+                        <div class="risk-desc">do màng chặn</div>
+                    </div>
+                    <div class="control-box">
+                        <div class="control-title">K2: Chọn cấp lọc phù hợp</div>
+                        <div class="control-desc">+ test lưu lượng</div>
+                    </div>
+                </div>
+                <div class="risk-control">
+                    <div class="risk-box">
+                        <div class="risk-title">R3: Chi phí vật tư tăng</div>
+                    </div>
+                    <div class="control-box">
+                        <div class="control-title">K3: So sánh PA1/PA2</div>
+                        <div class="control-desc">theo hiệu quả–BOM để chốt</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Kiến nghị phê duyệt -->
+        <div class="slide">
+            <h2>Kiến nghị phê duyệt</h2>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Xin duyệt:</strong> triển khai prototype PA1 + PA2 dự phòng để benchmark.</li>
+                    <li><strong>Xin duyệt:</strong> ngân sách mẫu vật tư & test trong 6 tháng.</li>
+                    <li><strong>Cam kết:</strong> báo cáo theo mốc tháng + chốt đề xuất triển khai sau vòng test xác nhận.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">10</span>
+    </div>
+
+    <div class="nav-controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">← Trước</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Sau →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const presentation = document.getElementById('presentation');
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            if (direction < 0 && currentSlide > 0) {
+                showSlide(currentSlide + direction);
+            } else if (direction > 0 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + direction);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                if (currentSlide > 0) changeSlide(-1);
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                if (currentSlide < totalSlides - 1) changeSlide(1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key === 'Escape') {
+                exitFullscreen();
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Fullscreen functions
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                presentation.requestFullscreen().catch(err => {
+                    console.log('Fullscreen error:', err);
+                });
+                presentation.classList.add('fullscreen');
+            } else {
+                exitFullscreen();
+            }
+        }
+
+        function exitFullscreen() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+                presentation.classList.remove('fullscreen');
+            }
+        }
+
+        // Handle fullscreen change
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                presentation.classList.remove('fullscreen');
+            }
+        });
+
+        // Click on slide to go next (right side) or previous (left side)
+        slides.forEach(slide => {
+            slide.addEventListener('click', function(e) {
+                if (e.target.classList.contains('nav-btn') || 
+                    e.target.closest('.nav-controls') || 
+                    e.target.closest('.slide-counter') ||
+                    e.target.closest('.help-text')) {
+                    return;
+                }
+                
+                const clickX = e.clientX;
+                const slideWidth = slide.offsetWidth;
+                const clickPercent = (clickX - slide.getBoundingClientRect().left) / slideWidth;
+                
+                if (clickPercent < 0.3 && currentSlide > 0) {
+                    changeSlide(-1);
+                } else if (clickPercent > 0.7 && currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                }
+            });
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
