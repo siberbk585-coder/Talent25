@@ -1,728 +1,1336 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html class="dark" lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công nghệ kháng khuẩn cho máy lọc nước M25</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dự án M25 - Trình bày 10 Slide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#38bdf8",
+                        "corporate-blue-dark": "#0a192f",
+                        "corporate-blue-mid": "#112240",
+                        "corporate-blue-accent": "#233554",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
         }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Calibri', 'Arial', sans-serif;
-            background: #1a1a1a;
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #ffffff;
         }
-
-        .presentation-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
         .slide {
             display: none;
-            width: 1280px;
-            height: 720px;
-            background: #ffffff;
-            position: relative;
-            padding: 60px 80px;
-            overflow: hidden;
+            min-height: 100vh;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .slide.active {
-            display: block;
-            animation: slideIn 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: translateY(0);
+            animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         @keyframes slideIn {
             from {
                 opacity: 0;
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
-
-        /* Slide 1 - Cover */
-        .slide-cover {
-            background: linear-gradient(135deg, #4472c4 0%, #5b9bd5 100%);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .slide-cover h1 {
-            font-size: 54px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            line-height: 1.2;
-            color: white;
+        .glass-panel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-
-        .slide-cover .subtitle {
-            font-size: 28px;
-            margin-bottom: 50px;
-            color: rgba(255, 255, 255, 0.95);
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
-        .slide-cover .info {
-            font-size: 20px;
-            margin: 12px 0;
-            color: rgba(255, 255, 255, 0.9);
+        .text-gradient {
+            background: linear-gradient(to right, #1e293b, #38bdf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .slide-cover .quote {
-            margin-top: 60px;
-            font-size: 22px;
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.9);
-            padding: 25px 40px;
-            background: rgba(255, 255, 255, 0.15);
-            border-left: 5px solid white;
-            max-width: 900px;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        /* Other slides */
-        .slide h2 {
-            font-size: 44px;
-            font-weight: bold;
-            color: #2e75b6;
-            margin-bottom: 40px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #2e75b6;
-        }
-
-        .slide-content {
-            font-size: 24px;
-            line-height: 1.6;
-            color: #333333;
-        }
-
-        .slide-content ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .slide-content li {
-            margin: 18px 0;
-            padding-left: 35px;
-            position: relative;
-            line-height: 1.7;
-        }
-
-        .slide-content li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            font-size: 32px;
-            color: #2e75b6;
-            font-weight: bold;
-            line-height: 1.2;
-        }
-
-        .slide-content li strong {
-            color: #2e75b6;
-            font-weight: bold;
-        }
-
-        /* Slide 5 - Steps */
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .step {
-            background: #e7f3ff;
-            border: 2px solid #2e75b6;
-            padding: 25px 15px;
-            text-align: center;
-            border-radius: 8px;
-        }
-
-        .step-number {
-            font-size: 48px;
-            font-weight: bold;
-            color: #2e75b6;
-            margin-bottom: 15px;
-        }
-
-        .step-text {
-            font-size: 18px;
-            color: #333;
-            font-weight: 600;
-        }
-
-        .highlight-box {
-            margin-top: 40px;
-            padding: 20px 30px;
-            background: #fff4e6;
-            border-left: 5px solid #ff9800;
-            font-size: 22px;
-            color: #333;
-        }
-
-        /* Slide 6 - Solutions */
-        .solution-box {
-            background: #f0f0f0;
-            padding: 25px 30px;
-            margin: 20px 0;
-            border-left: 6px solid #4472c4;
-            border-radius: 4px;
-        }
-
-        .solution-box.priority {
-            background: #fff4e6;
-            border-left-color: #ff9800;
-        }
-
-        .solution-box.max {
-            background: #f3e5f5;
-            border-left-color: #9c27b0;
-        }
-
-        .solution-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2e75b6;
-            margin-bottom: 8px;
-        }
-
-        .solution-desc {
-            font-size: 20px;
-            color: #555;
-        }
-
-        .message-box {
-            margin-top: 30px;
-            padding: 20px 30px;
-            background: #e8f5e9;
-            border-left: 5px solid #4caf50;
-            font-size: 22px;
-            color: #333;
-        }
-
-        /* Slide 7 - Timeline */
-        .timeline {
-            margin: 40px 0;
-        }
-
-        .timeline-bar {
-            height: 80px;
-            background: linear-gradient(90deg, #4472c4 0%, #5b9bd5 50%, #70ad47 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .timeline-milestone {
-            text-align: center;
-            color: white;
-        }
-
-        .timeline-milestone .month {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .timeline-milestone .activity {
-            font-size: 18px;
-        }
-
-        /* Slide 9 - Risks */
-        .risk-control {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 25px 0;
-        }
-
-        .risk-box, .control-box {
-            padding: 25px;
-            border-radius: 6px;
-        }
-
-        .risk-box {
-            background: #ffebee;
-            border-left: 5px solid #f44336;
-        }
-
-        .control-box {
-            background: #e8f5e9;
-            border-left: 5px solid #4caf50;
-        }
-
-        .risk-title, .control-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 22px;
-            color: #333;
-        }
-
-        .risk-desc, .control-desc {
-            font-size: 18px;
-            color: #555;
-        }
-
-        /* Diagram placeholder */
-        .diagram-placeholder {
-            background: #e3f2fd;
-            border: 2px dashed #2196f3;
-            border-radius: 6px;
-            padding: 50px;
-            text-align: center;
-            margin: 30px 0;
-            color: #1976d2;
-            font-style: italic;
-            font-size: 20px;
-        }
-
-        /* Navigation */
-        .nav-controls {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
+        /* Animations cho các elements */
+        .animate-on-scroll {
             opacity: 0;
-            transition: opacity 0.3s;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .presentation-container:hover .nav-controls {
+        .slide.active .animate-on-scroll {
             opacity: 1;
+            transform: translateY(0);
         }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid #2e75b6;
-            padding: 10px 25px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            color: #2e75b6;
-            transition: all 0.2s;
+        .slide.active .animate-on-scroll:nth-child(1) { animation-delay: 0.1s; }
+        .slide.active .animate-on-scroll:nth-child(2) { animation-delay: 0.2s; }
+        .slide.active .animate-on-scroll:nth-child(3) { animation-delay: 0.3s; }
+        .slide.active .animate-on-scroll:nth-child(4) { animation-delay: 0.4s; }
+        .slide.active .animate-on-scroll:nth-child(5) { animation-delay: 0.5s; }
+        .slide.active .animate-on-scroll:nth-child(6) { animation-delay: 0.6s; }
+        /* Smooth hover effects */
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .nav-btn:hover {
-            background: #2e75b6;
-            color: white;
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
-        .nav-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+        /* Progress bar animation */
+        .progress-bar {
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .slide-counter {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
-            z-index: 1000;
+        /* Icon animations */
+        .icon-float {
+            animation: float 3s ease-in-out infinite;
         }
-
-        /* Fullscreen mode */
-        .fullscreen .slide {
-            width: 100vw;
-            height: 100vh;
-            padding: 80px 100px;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-
-        .fullscreen .slide h2 {
-            font-size: 48px;
+        /* Smooth transitions for navigation */
+        #slide-controller {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .fullscreen .slide-content {
-            font-size: 28px;
+        #slide-controller:hover {
+            transform: translateY(-2px);
         }
-
-        .fullscreen .slide-cover h1 {
-            font-size: 64px;
+        /* Pulse animation for active elements */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
-
-        /* Responsive */
-        @media (max-width: 1400px) {
-            .slide {
-                width: 90vw;
-                height: 50.625vw;
-                max-height: 90vh;
-            }
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-
-        @media (max-width: 768px) {
-            .slide {
-                padding: 40px 50px;
-            }
-
-            .slide h2 {
-                font-size: 32px;
-            }
-
-            .slide-content {
-                font-size: 18px;
-            }
-
-            .steps-container {
-                grid-template-columns: 1fr;
-            }
-
-            .risk-control {
-                grid-template-columns: 1fr;
-            }
+        /* Smooth scale on hover */
+        .smooth-scale {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        /* Help text */
-        .help-text {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 12px;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .smooth-scale:hover {
+            transform: scale(1.05);
         }
-
-        .presentation-container:hover .help-text {
-            opacity: 1;
+        .slide-indicator {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Chart/Bar animations */
+        @keyframes growWidth {
+            from { width: 0; }
+        }
+        .bar-grow {
+            animation: growWidth 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
     </style>
 </head>
-<body>
-    <div class="presentation-container" id="presentation">
-        <div class="help-text">
-            ← → Điều hướng | F Fullscreen | ESC Thoát
+<body class="text-gray-900 min-h-screen flex flex-col overflow-x-hidden bg-white">
+    <!-- Navigation Controller -->
+    <div id="slide-controller" class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full border border-primary/20 shadow-xl">
+        <button id="prev-slide" class="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 hover:bg-primary hover:text-white text-primary transition-all">
+            <span class="material-symbols-outlined text-lg">chevron_left</span>
+        </button>
+        <div class="flex items-center gap-1 px-2">
+            <span id="current-slide" class="text-primary text-xs font-bold">1</span>
+            <span class="text-gray-500 text-xs">/</span>
+            <span class="text-gray-500 text-xs">12</span>
         </div>
-
-        <!-- Slide 1: Cover -->
-        <div class="slide slide-cover active">
-            <h1>Công nghệ kháng khuẩn cho máy lọc nước M25</h1>
-            <div class="subtitle">(Giảm tái nhiễm sau RO)</div>
-            <div class="info"><strong>Nhóm Talent25:</strong> … | <strong>Mentor:</strong> …</div>
-            <div class="info"><strong>Trưởng nhóm:</strong> … | <strong>Thành viên:</strong> …</div>
-            <div class="info"><strong>Thời gian triển khai:</strong> … (6 tháng)</div>
-            <div class="quote">
-                "Đề tài tập trung vào giảm tái nhiễm vi sinh ở đoạn sau RO — phần dễ phát sinh biofilm và khiếu nại."
-            </div>
-        </div>
-
-        <!-- Slide 2: Bối cảnh & Lý do chọn đề tài -->
-        <div class="slide">
-            <h2>Bối cảnh & Lý do chọn đề tài</h2>
-            <div class="slide-content">
-                <ul>
-                    <li>RO tốt, nhưng tái nhiễm thường xảy ra ở đoạn sau RO (bình/ống/vòi).</li>
-                    <li>Điểm rủi ro: đầu vòi hở, nước đứng, đường ống → biofilm.</li>
-                    <li>Ảnh hưởng: mùi/vị, mất niềm tin, tăng bảo hành/khiếu nại.</li>
-                    <li>Vì sao làm: "điểm yếu phổ biến" → có cơ hội tạo khác biệt cho M25.</li>
-                </ul>
-                <div class="diagram-placeholder">
-                    Sơ đồ 1 đường nước, khoanh đỏ "bình – ống – vòi"
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 3: Mục tiêu -->
-        <div class="slide">
-            <h2>Mục tiêu</h2>
-            <div class="slide-content">
-                <ul>
-                    <li><strong>Mục tiêu tổng:</strong> giảm tái nhiễm vi sinh sau RO trên M25.</li>
-                    <li><strong>Đầu ra:</strong> 1 cấu hình khả thi + 1 cấu hình dự phòng (để chọn).</li>
-                    <li>Có kế hoạch thử nghiệm xác nhận (test plan) + tiêu chí pass/fail.</li>
-                    <li>Hoàn thành trong 6 tháng, có mốc báo cáo theo tháng.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 4: Phạm vi & Đối tượng áp dụng -->
-        <div class="slide">
-            <h2>Phạm vi & Đối tượng áp dụng</h2>
-            <div class="slide-content">
-                <ul>
-                    <li><strong>Đối tượng:</strong> M25 – nhánh nước sạch sau RO.</li>
-                    <li><strong>Phạm vi:</strong> giải pháp cuối nguồn (bình/ống/vòi/nhánh ra vòi).</li>
-                    <li><strong>Không mở rộng:</strong> thay đổi RO/platform khác.</li>
-                    <li><strong>Giới hạn:</strong> ưu tiên phương án ít thay đổi kết cấu, dễ tích hợp.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 5: Cách làm (Phương pháp) -->
-        <div class="slide">
-            <h2>Cách làm (Phương pháp)</h2>
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-text">Xác định điểm tái nhiễm</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-text">Benchmark công nghệ</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-text">Chọn 2 phương án khả thi</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-text">Prototype tích hợp</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-text">Test xác nhận & chốt đề xuất</div>
-                </div>
-            </div>
-            <div class="highlight-box">
-                <strong>Điểm mạnh dự án:</strong> có đường đi rõ ràng và có tiêu chí test để chốt quyết định.
-            </div>
-        </div>
-
-        <!-- Slide 6: Các phương án giải pháp -->
-        <div class="slide">
-            <h2>Các phương án giải pháp (Tổng thể)</h2>
-            <div class="slide-content">
-                <div class="solution-box priority">
-                    <div class="solution-title">PA1 (Ưu tiên): Barrier + UVC</div>
-                    <div class="solution-desc">Chặn + diệt khuẩn cuối nguồn</div>
-                </div>
-                <div class="solution-box">
-                    <div class="solution-title">PA2: Vật liệu kháng khuẩn + Barrier</div>
-                    <div class="solution-desc">Ức chế biofilm + chặn cơ học</div>
-                </div>
-                <div class="solution-box max">
-                    <div class="solution-title">PA3 (Max): Kháng khuẩn + Barrier + UVC</div>
-                    <div class="solution-desc">Hiệu quả cao, BOM cao</div>
-                </div>
-                <div class="message-box">
-                    <strong>Thông điệp chốt:</strong> Dự án sẽ chọn 1 PA làm prototype chính + 1 PA dự phòng để so sánh.
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 7: Phương án đề xuất triển khai + Nguồn lực/Ngân sách -->
-        <div class="slide">
-            <h2>Phương án đề xuất triển khai + Nguồn lực/Ngân sách</h2>
-            <div class="slide-content">
-                <ul>
-                    <li><strong>Chọn PA1 làm prototype chính</strong> (lý do: tác động trực tiếp ở cuối nguồn, dễ đo hiệu quả).</li>
-                    <li><strong>Các hạng mục cần:</strong> module UVC / màng chặn / cụm lắp + hướng dẫn thay thế.</li>
-                    <li><strong>Nguồn lực:</strong> R&D + DQA + Mua hàng + Thiết kế cơ khí/điện.</li>
-                    <li><strong>Ngân sách:</strong> mẫu vật tư + test vi sinh (+ chi phí test ngoài nếu cần).</li>
-                </ul>
-                <div class="timeline">
-                    <div class="timeline-bar">
-                        <div class="timeline-milestone">
-                            <div class="month">M1-M2</div>
-                            <div class="activity">Thiết kế</div>
-                        </div>
-                        <div class="timeline-milestone">
-                            <div class="month">M3-M4</div>
-                            <div class="activity">Test vòng 1</div>
-                        </div>
-                        <div class="timeline-milestone">
-                            <div class="month">M5-M6</div>
-                            <div class="activity">Tối ưu & chốt</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 8: Giá trị mang lại -->
-        <div class="slide">
-            <h2>Giá trị mang lại</h2>
-            <div class="slide-content">
-                <ul>
-                    <li><strong>Chất lượng:</strong> giảm nguy cơ tái nhiễm, ổn định trải nghiệm nước uống.</li>
-                    <li><strong>Thị trường:</strong> tăng điểm khác biệt "kháng khuẩn cuối nguồn".</li>
-                    <li><strong>Vận hành:</strong> giảm khiếu nại liên quan mùi/biofilm.</li>
-                    <li><strong>Tổ chức:</strong> tạo bộ tiêu chí test chuẩn để áp dụng cho các model sau.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 9: Rủi ro & Biện pháp kiểm soát -->
-        <div class="slide">
-            <h2>Rủi ro & Biện pháp kiểm soát</h2>
-            <div class="slide-content">
-                <div class="risk-control">
-                    <div class="risk-box">
-                        <div class="risk-title">R1: Tích hợp UVC</div>
-                        <div class="risk-desc">(không gian/điện/nhiệt)</div>
-                    </div>
-                    <div class="control-box">
-                        <div class="control-title">K1: Chọn module chuẩn</div>
-                        <div class="control-desc">+ thiết kế che chắn</div>
-                    </div>
-                </div>
-                <div class="risk-control">
-                    <div class="risk-box">
-                        <div class="risk-title">R2: Giảm lưu lượng</div>
-                        <div class="risk-desc">do màng chặn</div>
-                    </div>
-                    <div class="control-box">
-                        <div class="control-title">K2: Chọn cấp lọc phù hợp</div>
-                        <div class="control-desc">+ test lưu lượng</div>
-                    </div>
-                </div>
-                <div class="risk-control">
-                    <div class="risk-box">
-                        <div class="risk-title">R3: Chi phí vật tư tăng</div>
-                    </div>
-                    <div class="control-box">
-                        <div class="control-title">K3: So sánh PA1/PA2</div>
-                        <div class="control-desc">theo hiệu quả–BOM để chốt</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 10: Kiến nghị phê duyệt -->
-        <div class="slide">
-            <h2>Kiến nghị phê duyệt</h2>
-            <div class="slide-content">
-                <ul>
-                    <li><strong>Xin duyệt:</strong> triển khai prototype PA1 + PA2 dự phòng để benchmark.</li>
-                    <li><strong>Xin duyệt:</strong> ngân sách mẫu vật tư & test trong 6 tháng.</li>
-                    <li><strong>Cam kết:</strong> báo cáo theo mốc tháng + chốt đề xuất triển khai sau vòng test xác nhận.</li>
-                </ul>
-            </div>
-        </div>
+        <button id="next-slide" class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md shadow-primary/20">
+            <span class="material-symbols-outlined text-lg">chevron_right</span>
+        </button>
     </div>
 
-    <div class="slide-counter">
-        <span id="current-slide">1</span> / <span id="total-slides">10</span>
-    </div>
+    <!-- SLIDE 1: Trang bìa -->
+    <section id="slide-1" class="slide active">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-6 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
+</svg>
+</div>
+                <h2 class="text-gray-900 text-xl font-bold tracking-tight">Talent25</h2>
+</div>
+<div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                Slide 1/12
+            </div>
+</div>
+</header>
+        <main class="flex-1 flex flex-col items-center justify-center px-4 py-16 relative bg-gradient-to-br from-white via-blue-50/30 to-cyan-50/40">
+<div class="absolute inset-0 z-0 overflow-hidden">
+                <!-- Gradient background layers -->
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-cyan-100/20"></div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl"></div>
+                <!-- Subtle pattern overlay -->
+                <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 2px 2px, rgb(0 0 0) 1px, transparent 0); background-size: 40px 40px;"></div>
+</div>
+            <div class="layout-content-container relative z-10 flex flex-col max-w-[1600px] w-full gap-12">
+<div class="text-center space-y-6">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/30 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+<span class="material-symbols-outlined text-sm">science</span>
+                        Dự án Nghiên cứu & Phát triển (R&D)
+                </div>
+                    <h1 class="text-gray-900 tracking-tighter text-5xl md:text-7xl font-bold leading-[1.1]">
+                    Tên đề tài: <span class="text-gradient">Công nghệ kháng khuẩn</span> <br/>
+                    cho <span class="text-primary underline underline-offset-8 decoration-2 decoration-primary/30">máy lọc nước M25</span>
+</h1>
+                    <p class="text-gray-600 text-lg md:text-xl font-light max-w-3xl mx-auto leading-relaxed">
+                    Giải pháp tối ưu nhằm giảm tái nhiễm khuẩn sau màng RO, <br class="hidden md:block"/> bảo vệ sức khỏe người dùng và nâng cao tiêu chuẩn nước sạch.
+                </p>
+</div>
+<div class="glass-panel rounded-2xl p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 shadow-2xl">
+                    <div class="flex flex-col gap-2 border-r border-gray-200 last:border-0 pr-4">
+<p class="text-primary text-[10px] font-bold uppercase tracking-widest">Mentor</p>
+                        <p class="text-gray-900 text-lg font-bold">TS. Sarah Jenkins</p>
+                        <p class="text-gray-500 text-xs font-medium">Chuyên gia xử lý nước</p>
+</div>
+                    <div class="flex flex-col gap-2 border-r border-gray-200 last:border-0 pr-4">
+<p class="text-primary text-[10px] font-bold uppercase tracking-widest">Trưởng nhóm</p>
+                        <p class="text-gray-900 text-lg font-bold">Alex Rivers</p>
+                        <p class="text-gray-500 text-xs font-medium">Kỹ sư hệ thống</p>
+</div>
+                    <div class="flex flex-col gap-2 border-r border-gray-200 last:border-0 pr-4">
+<p class="text-primary text-[10px] font-bold uppercase tracking-widest">Nhóm</p>
+                        <p class="text-gray-900 text-lg font-bold">Talent25</p>
+                        <p class="text-gray-500 text-xs font-medium">Đơn vị đổi mới sáng tạo</p>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-primary text-[10px] font-bold uppercase tracking-widest">Thành viên</p>
+                        <p class="text-gray-900 text-sm font-semibold leading-relaxed">Jordan M., Sam K., Elena V.</p>
+</div>
+</div>
+<div class="w-full space-y-8 mt-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">schedule</span>
+                            <h4 class="text-gray-700 text-sm font-bold uppercase tracking-[0.15em]">Lộ trình thực hiện (6 Tháng)</h4>
+</div>
+                        <span class="text-white text-[10px] font-black px-3 py-1 rounded-full bg-primary shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                        TRẠNG THÁI: THÁNG 01
+                    </span>
+</div>
+<div class="relative py-6 px-4">
+                        <div class="absolute top-1/2 left-0 w-full h-[2px] bg-gray-200 -translate-y-1/2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[16.66%] shadow-[0_0_10px_#38bdf8]"></div>
+</div>
+<div class="relative flex justify-between">
+<div class="flex flex-col items-center group">
+<div class="size-5 rounded-full bg-primary ring-4 ring-primary/20 z-10 transition-transform group-hover:scale-125"></div>
+<span class="mt-3 text-primary text-[11px] font-bold">T1</span>
+                                <span class="text-gray-900 text-[10px] font-bold uppercase mt-1">Khởi động</span>
+</div>
+<div class="flex flex-col items-center group">
+                                <div class="size-4 rounded-full bg-gray-200 border border-gray-200 z-10 transition-transform group-hover:scale-125"></div>
+                                <span class="mt-4 text-gray-900/30 text-[11px] font-bold">T2</span>
+                                <span class="text-gray-900/20 text-[10px] font-medium uppercase mt-1">Thiết kế</span>
+</div>
+<div class="flex flex-col items-center group">
+                                <div class="size-4 rounded-full bg-gray-200 border border-gray-200 z-10 transition-transform group-hover:scale-125"></div>
+                                <span class="mt-4 text-gray-900/30 text-[11px] font-bold">T3</span>
+                                <span class="text-gray-900/20 text-[10px] font-medium uppercase mt-1">Thử nghiệm</span>
+</div>
+<div class="flex flex-col items-center group">
+                                <div class="size-4 rounded-full bg-gray-200 border border-gray-200 z-10 transition-transform group-hover:scale-125"></div>
+                                <span class="mt-4 text-gray-900/30 text-[11px] font-bold">T4</span>
+                                <span class="text-gray-900/20 text-[10px] font-medium uppercase mt-1">Hiệu chỉnh</span>
+</div>
+<div class="flex flex-col items-center group">
+                                <div class="size-4 rounded-full bg-gray-200 border border-gray-200 z-10 transition-transform group-hover:scale-125"></div>
+                                <span class="mt-4 text-gray-900/30 text-[11px] font-bold">T5</span>
+                                <span class="text-gray-900/20 text-[10px] font-medium uppercase mt-1">Sản xuất</span>
+</div>
+<div class="flex flex-col items-center group">
+                                <div class="size-4 rounded-full bg-gray-200 border border-gray-200 z-10 transition-transform group-hover:scale-125"></div>
+                                <span class="mt-4 text-gray-900/30 text-[11px] font-bold">T6</span>
+                                <span class="text-gray-900/20 text-[10px] font-medium uppercase mt-1">Bàn giao</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+        <footer class="p-8 text-center border-t border-gray-200 bg-white/90 backdrop-blur-md">
+<div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-xs font-medium tracking-wide">
+                © 2024 TALENT25 CORPORATION. TÀI LIỆU NGHIÊN CỨU NỘI BỘ - BẢO MẬT CAO.
+            </p>
+<div class="flex gap-6">
+                    <span class="text-gray-500 text-[10px] font-bold flex items-center gap-1 uppercase">
+<span class="material-symbols-outlined text-sm">verified_user</span> 
+                    Confidential
+                </span>
+                    <span class="text-gray-500 text-[10px] font-bold flex items-center gap-1 uppercase">
+<span class="material-symbols-outlined text-sm">language</span>
+                    RD-M25-GLOBAL
+                </span>
+</div>
+</div>
+</footer>
+    </section>
 
-    <div class="nav-controls">
-        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">← Trước</button>
-        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Sau →</button>
-    </div>
+    <!-- SLIDE 2: Bối cảnh & Lý do -->
+    <section id="slide-2" class="slide">
+        <header class="flex items-center justify-between border-b border-solid border-gray-300 px-10 py-3 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.1288 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"></path>
+</svg>
+</div>
+                <h2 class="text-gray-900 text-lg font-bold leading-tight tracking-[-0.015em]">Bảng điều khiển R&D M25</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 2/12
+                </div>
+</div>
+</header>
+<main class="flex-1 flex justify-center py-8">
+            <div class="max-w-[1600px] w-full px-6 flex flex-col gap-6">
+                <div class="flex flex-col gap-2 pt-4">
+                    <h1 class="text-gray-900 text-5xl font-black leading-tight tracking-tight">Slide 2 - Bối cảnh & Lý do chọn đề tài</h1>
+                    <p class="text-gray-600 text-lg font-normal max-w-3xl leading-relaxed">
+                        Bài toán "Chặng cuối": Ngay cả với công nghệ lọc RO hiệu quả cao, môi trường sau lọc vẫn tiềm ẩn nguy cơ tái nhiễm khuẩn thứ cấp.
+                    </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
+<div class="lg:col-span-5 flex flex-col gap-6">
+                        <div class="bg-gray-50 border border-gray-300 rounded-xl p-6 h-full shadow-2xl">
+<div class="grid grid-cols-[40px_1fr] gap-x-4">
+<div class="flex flex-col items-center gap-1">
+<div class="text-primary bg-primary/10 rounded-full p-2 border border-primary/20">
+<span class="material-symbols-outlined">filter_alt</span>
+</div>
+                                    <div class="w-[2px] bg-gray-200 h-12 grow"></div>
+</div>
+<div class="flex flex-col pb-8">
+                                    <p class="text-gray-900 text-lg font-bold">Thực trạng: Tái nhiễm sau RO (bình/ống/vòi)</p>
+                                    <p class="text-gray-600 text-base font-normal mt-1 leading-snug">
+                                        RO lọc rất tốt tại màng, nhưng khâu lưu trữ và dẫn nước trở thành mắt xích yếu nhất trong chuỗi an toàn nước.
+                                    </p>
+</div>
+<div class="flex flex-col items-center gap-1">
+                                    <div class="w-[2px] bg-gray-200 h-2"></div>
+<div class="text-red-500 bg-red-500/10 rounded-full p-2 border border-red-500/20">
+<span class="material-symbols-outlined">warning</span>
+</div>
+                                    <div class="w-[2px] bg-gray-200 h-12 grow"></div>
+</div>
+<div class="flex flex-col pb-8">
+                                    <p class="text-gray-900 text-lg font-bold">Điểm rủi ro: Vòi hở, nước đứng, biofilm</p>
+                                    <p class="text-gray-600 text-base font-normal mt-1 leading-snug">
+                                        Vòi hở tiếp xúc không khí, nước đọng trong bình chứa và đường ống tạo điều kiện cho <span class="text-red-400 font-semibold underline decoration-red-500/50">màng sinh học (biofilm)</span> hình thành nhanh chóng.
+                                    </p>
+</div>
+<div class="flex flex-col items-center gap-1">
+                                    <div class="w-[2px] bg-gray-200 h-2"></div>
+<div class="text-amber-500 bg-amber-500/10 rounded-full p-2 border border-amber-500/20">
+<span class="material-symbols-outlined">sentiment_very_dissatisfied</span>
+</div>
+                                    <div class="w-[2px] bg-gray-200 h-12 grow"></div>
+</div>
+<div class="flex flex-col pb-8">
+                                    <p class="text-gray-900 text-lg font-bold">Ảnh hưởng: Mùi/vị, mất niềm tin</p>
+                                    <p class="text-gray-600 text-base font-normal mt-1 leading-snug">
+                                        Các vấn đề về mùi vị gây khó chịu, khiến khách hàng mất niềm tin vào thương hiệu và gia tăng khiếu nại bảo hành.
+                                    </p>
+</div>
+<div class="flex flex-col items-center gap-1 pb-2">
+                                    <div class="w-[2px] bg-gray-200 h-2"></div>
+<div class="text-green-500 bg-green-500/10 rounded-full p-2 border border-green-500/20">
+<span class="material-symbols-outlined">verified</span>
+</div>
+</div>
+<div class="flex flex-col">
+                                    <p class="text-gray-900 text-lg font-bold">Cơ hội tạo khác biệt cho M25</p>
+                                    <p class="text-gray-600 text-base font-normal mt-1 leading-snug">
+                                        Tích hợp vật liệu kháng khuẩn 24/7 tạo nên lợi thế cạnh tranh độc nhất cho dòng sản phẩm M25 thế hệ mới.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7 flex flex-col gap-4">
+                        <div class="bg-gray-50 border border-gray-300 rounded-xl p-6 h-full flex flex-col shadow-2xl overflow-hidden relative">
+<div class="flex justify-between items-center mb-6">
+                                <h3 class="text-gray-900 font-bold text-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500">biotech</span>
+                                    Sơ đồ rủi ro: Các khu vực nguy cơ cao
+                                </h3>
+<span class="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded border border-red-500/30 uppercase tracking-wider">Dễ bị nhiễm khuẩn</span>
+</div>
+<div class="flex-1 flex items-center justify-center relative min-h-[400px]">
+<div class="w-full h-full flex items-center justify-center">
+                                    <!-- Hình ảnh từ Google Drive - Cần set quyền "Anyone with the link can view" -->
+                                    <img 
+                                        src="https://lh3.googleusercontent.com/d/1diB_UlAz2_Oz0woQH1we7pheSZPM__Lq" 
+                                        alt="Sơ đồ rủi ro: Các khu vực nguy cơ cao"
+                                        class="w-full h-full object-contain rounded-xl shadow-lg"
+                                        style="max-height: 500px;"
+                                        onerror="console.error('Không thể tải hình ảnh. Vui lòng kiểm tra quyền chia sẻ file trên Google Drive.'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                    />
+                                    <div class="hidden flex-col items-center justify-center p-8 bg-amber-50 border-2 border-amber-200 rounded-xl">
+                                        <span class="material-symbols-outlined text-amber-500 text-5xl mb-4">image_not_supported</span>
+                                        <p class="text-amber-800 font-bold mb-2">Hình ảnh không thể tải</p>
+                                        <p class="text-amber-700 text-sm text-center max-w-md">
+                                            Vui lòng kiểm tra quyền chia sẻ file trên Google Drive:<br/>
+                                            1. Mở file trên Google Drive<br/>
+                                            2. Click "Chia sẻ" (Share)<br/>
+                                            3. Chọn "Bất kỳ ai có đường liên kết" (Anyone with the link)<br/>
+                                            4. Set quyền là "Người xem" (Viewer)
+                                        </p>
+</div>
+</div>
+</div>
+                            <p class="text-gray-600 text-sm italic text-center mt-4">
+                                Các vùng màu đỏ biểu thị lỗ hổng cấu trúc nơi vi khuẩn dễ dàng phát triển sau quá trình lọc.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+    </section>
+
+    <!-- SLIDE 3: Mục tiêu dự án -->
+    <section id="slide-3" class="slide">
+        <header class="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:px-40 bg-white/50 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+                <div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z" fill="currentColor"></path>
+</svg>
+</div>
+                <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900">Bảng điều khiển R&D</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 3/12
+</div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-12">
+            <div class="max-w-[1600px] flex-1 px-6 lg:px-10 flex flex-col gap-8">
+<div class="flex flex-wrap justify-between items-end gap-6 py-4">
+<div class="flex flex-col gap-3">
+                        <h1 class="text-gray-900 text-5xl lg:text-6xl font-black leading-tight tracking-tighter">Mục tiêu dự án</h1>
+<div class="flex items-center gap-3">
+<span class="w-12 h-1 bg-primary rounded-full"></span>
+                            <p class="text-gray-600 text-xl font-medium">Công nghệ kháng khuẩn cho máy lọc nước M25</p>
+</div>
+</div>
+</div>
+                <div class="space-y-6">
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">target</span>
+                            Mục tiêu tổng
+                        </h2>
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Thiết kế & đề xuất cấu hình giải pháp kháng khuẩn cho M25 nhằm giảm tái nhiễm vi sinh sau RO (đường nước sạch).
+                        </p>
+</div>
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">checklist</span>
+                            Mục tiêu SMART
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-start gap-3">
+                                <span class="text-primary font-bold">S:</span>
+                                <p class="text-gray-700">Tích hợp cụm giải pháp "kháng khuẩn + lọc cơ học cuối" cho đường nước sau RO</p>
+</div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-primary font-bold">M:</span>
+                                <p class="text-gray-700">Xây dựng bộ tiêu chí test: HPC/vi sinh chỉ thị, đánh giá biofilm, lưu lượng, kiểm soát Ag⁺</p>
+</div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-primary font-bold">A:</span>
+                                <p class="text-gray-700">Tận dụng các hướng đã nghiên cứu: nano bạc, màng 0.2 µm, UV, IONPURE, KDF</p>
+</div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-primary font-bold">R:</span>
+                                <p class="text-gray-700">Bám vấn đề thực tế tái nhiễm ở đầu vòi/ống/bình</p>
+</div>
+                            <div class="flex items-start gap-3 md:col-span-2">
+                                <span class="text-primary font-bold">T:</span>
+                                <p class="text-gray-700">Hoàn thành trong 6 tháng: prototype → test → báo cáo đề xuất triển khai</p>
+</div>
+</div>
+</div>
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">inventory_2</span>
+                            Kết quả mong đợi (Deliverables)
+                        </h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
+                                <span class="text-gray-700">01 phương án cấu hình tối ưu cho M25 + bản vẽ/sơ đồ lắp đặt</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
+                                <span class="text-gray-700">01 kế hoạch thử nghiệm xác nhận (test plan)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
+                                <span class="text-gray-700">01 báo cáo đánh giá: ưu/nhược, rủi ro, chi phí, điều kiện triển khai</span>
+                            </li>
+                        </ul>
+</div>
+</div>
+</div>
+</main>
+    </section>
+
+    <!-- SLIDE 4: Phạm vi & Đối tượng -->
+    <section id="slide-4" class="slide">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-300 px-10 py-3 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+</svg>
+</div>
+                <h2 class="text-lg font-bold leading-tight tracking-tight text-gray-900">Dự án R&D: Công nghệ kháng khuẩn cho máy lọc nước M25</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 4/12
+</div>
+</div>
+</header>
+        <main class="flex-1 max-w-[1600px] mx-auto w-full px-10 py-8">
+<div class="flex flex-wrap justify-between items-end gap-3 py-6">
+<div class="flex min-w-72 flex-col gap-2">
+                    <h1 class="text-gray-900 text-5xl font-black leading-tight tracking-tighter">Phạm vi & Đối tượng</h1>
+                    <p class="text-gray-600 text-lg font-normal flex items-center gap-3">
+                    Mã dự án: M25-ATM-2024 
+                    <span class="inline-block w-1 h-1 rounded-full bg-slate-600"></span>
+<span class="text-red-400 font-semibold uppercase text-xs tracking-widest border border-red-400/30 px-2 py-0.5 rounded">Bảo mật</span>
+</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
+                <div class="lg:col-span-7 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-300 p-10 relative overflow-hidden">
+<div class="relative w-full aspect-square max-w-md flex items-center justify-center z-10">
+                        <div class="absolute w-full h-full rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center">
+                            <span class="absolute top-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">Nền tảng khác / Hệ thống RO</span>
+</div>
+<div class="absolute w-[75%] h-[75%] rounded-full border border-primary/30 bg-primary/5 flex items-center justify-center">
+<span class="absolute top-8 text-[10px] font-bold uppercase tracking-[0.2em] text-primary/60">Hệ sinh thái M25</span>
+</div>
+                        <div class="absolute w-[45%] h-[45%] rounded-full bg-primary shadow-[0_0_60px_rgba(56,189,248,0.4)] flex flex-col items-center justify-center text-center p-6 border-4 border-gray-200">
+                            <span class="material-symbols-outlined text-gray-900 text-5xl mb-2">center_focus_strong</span>
+                            <p class="text-gray-900 font-bold text-sm leading-tight uppercase tracking-tight">Giải pháp<br/>cuối nguồn</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 flex flex-col gap-4">
+                    <div class="flex gap-4 rounded-xl border border-gray-300 glass-panel p-5 hover:border-primary/50 transition-all group cursor-default">
+                        <div class="bg-primary/10 text-primary size-12 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-gray-900 transition-colors">
+<span class="material-symbols-outlined">track_changes</span>
+</div>
+<div class="flex flex-col gap-1">
+                            <h2 class="text-gray-900 text-lg font-bold leading-tight">Đối tượng M25</h2>
+                            <p class="text-gray-600 text-sm font-normal leading-relaxed">Tập trung trọng tâm và duy nhất vào dòng sản phẩm <span class="text-primary font-semibold">Nước sạch M25</span>.</p>
+</div>
+</div>
+                    <div class="flex gap-4 rounded-xl border border-gray-300 glass-panel p-5 hover:border-primary/50 transition-all group cursor-default">
+<div class="bg-primary/10 text-primary size-12 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div class="flex flex-col gap-1">
+                            <h2 class="text-gray-900 text-lg font-bold leading-tight">Giải pháp cuối nguồn</h2>
+                            <p class="text-gray-600 text-sm font-normal leading-relaxed">Cụm "kháng khuẩn cuối nguồn" (sau RO): lõi chức năng/đèn UV/vật liệu kháng khuẩn</p>
+                            <p class="text-gray-600 text-sm font-normal leading-relaxed mt-2">Màng lọc "chặn cơ học cuối" cỡ 0.2 µm</p>
+                            <p class="text-gray-600 text-sm font-normal leading-relaxed mt-2">Xem xét vật liệu cho bình/ống/vòi (nhựa/silicone) nếu có thể cải tiến</p>
+</div>
+</div>
+                    <div class="flex gap-4 rounded-xl border border-red-300 bg-red-50 p-5 hover:border-red-400 transition-all group border-dashed">
+                        <div class="bg-red-500/10 text-red-500 size-12 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-red-500 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">lock_reset</span>
+</div>
+<div class="flex flex-col gap-1">
+                            <h2 class="text-gray-900 text-lg font-bold leading-tight">Ngoài phạm vi</h2>
+                            <p class="text-gray-600 text-sm font-normal leading-relaxed">Thay đổi công nghệ RO, thay đổi toàn bộ platform máy khác M25</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+    </section>
+
+    <!-- SLIDE 5-10: Các slide còn lại với cấu trúc cơ bản -->
+    <section id="slide-5" class="slide">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-10 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+                <div class="size-10 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined font-bold">water_drop</span>
+</div>
+<div>
+                    <h2 class="text-gray-900 text-lg font-bold leading-tight tracking-tight">R&D Máy lọc nước M25</h2>
+<p class="text-primary/70 text-xs font-medium uppercase tracking-wider">Internal Research</p>
+</div>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 5/12
+</div>
+</div>
+</header>
+        <main class="flex-1 px-10 md:px-20 py-12 max-w-[1800px] mx-auto w-full">
+<div class="flex flex-wrap justify-between items-end gap-6 mb-12">
+<div class="flex min-w-72 flex-col gap-2">
+                    <h1 class="text-gray-900 text-4xl font-bold tracking-tight">Slide 5 - Cách làm (Phương pháp)</h1>
+                    <p class="text-gray-600 text-lg font-light">Dự án: Công nghệ kháng khuẩn cho máy lọc nước M25</p>
+</div>
+</div>
+            <div class="space-y-6">
+                <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                    <h2 class="text-gray-900 text-2xl font-bold mb-6">Pipeline 5 bước nghiên cứu</h2>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">1</div>
+                            <div class="flex-1">
+                                <h3 class="text-gray-900 text-lg font-bold mb-2">Khảo sát hiện trạng & điểm nhiễm</h3>
+                                <p class="text-gray-600">Tổng hợp các điểm rủi ro: đầu vòi, ống silicone/cần vòi, bình nhựa "hở", mạt than tạo nền cho biofilm</p>
+</div>
+</div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">2</div>
+                            <div class="flex-1">
+                                <h3 class="text-gray-900 text-lg font-bold mb-2">Phân tích cơ chế (root cause)</h3>
+                                <p class="text-gray-600">Biofilm phát triển nhanh khi: nước đứng 6–12h; oxy hòa tan; ánh sáng → cộng hưởng tăng mạnh</p>
+                </div>
+</div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">3</div>
+                            <div class="flex-1">
+                                <h3 class="text-gray-900 text-lg font-bold mb-2">Benchmark giải pháp</h3>
+                                <ul class="text-gray-600 space-y-1 mt-2">
+                                    <li>• Vật liệu kháng khuẩn: IONPURE, nano bạc, KDF</li>
+                                    <li>• Barrier: màng 0.2 µm</li>
+                                    <li>• Diệt khuẩn cuối: UV sau 0.2 µm</li>
+                                    <li>• Thiết kế mô-đun UVC theo QCVN 6-1:2010/BYT, NSF/ANSI 58, UL</li>
+                                </ul>
+                </div>
+</div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">4</div>
+                            <div class="flex-1">
+                                <h3 class="text-gray-900 text-lg font-bold mb-2">Thiết kế cấu hình + Prototype</h3>
+                                <p class="text-gray-600">Chọn 1–2 cấu hình khả thi nhất để dựng mẫu/thiết kế</p>
+                </div>
+</div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">5</div>
+                            <div class="flex-1">
+                                <h3 class="text-gray-900 text-lg font-bold mb-2">Xác nhận bằng thử nghiệm</h3>
+                                <p class="text-gray-600">Chỉ tiêu: vi sinh/HPC, dấu hiệu biofilm, lưu lượng, độ bền, rủi ro Ag⁺, tính bảo trì</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+    </section>
+
+    <section id="slide-6" class="slide">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-300 px-10 py-3 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">biotech</span>
+</div>
+                <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-gray-900">Bảng điều khiển Dự án R&D</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 6/12
+</div>
+</div>
+</header>
+        <main class="max-w-[1600px] mx-auto px-6 py-8">
+<div class="flex flex-wrap justify-between items-end gap-3 mb-10">
+<div class="flex flex-col gap-2">
+                    <h1 class="text-gray-900 text-4xl font-black leading-tight tracking-[-0.033em]">Slide 6: Các phương án giải pháp</h1>
+                    <p class="text-gray-600 text-lg font-normal leading-normal">Công nghệ kháng khuẩn cho máy lọc nước M25</p>
+</div>
+</div>
+            <div class="space-y-6">
+                <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                    <h2 class="text-gray-900 text-2xl font-bold mb-4">Bảng "Hiện trạng – Giải pháp – Kết quả mong muốn"</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <h3 class="text-red-700 font-bold mb-2">Hiện trạng</h3>
+                            <p class="text-gray-700 text-sm">Tái nhiễm vi sinh sau RO tại vòi/ống/bình; hình thành biofilm nhờ mạt than + ẩm + không có tác nhân diệt khuẩn</p>
+</div>
+                        <div class="bg-primary/10 border border-primary/30 rounded-lg p-4">
+                            <h3 class="text-primary font-bold mb-2">Giải pháp</h3>
+                            <p class="text-gray-700 text-sm">3 lớp phòng thủ: Ức chế bám (nano bạc/IONPURE/KDF) → Chặn cơ học (màng 0.2 µm) → Diệt khuẩn cuối (UV)</p>
+</div>
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <h3 class="text-green-700 font-bold mb-2">Kết quả mong muốn</h3>
+                            <p class="text-gray-700 text-sm">Giảm tái nhiễm, giảm biofilm, ổn định chất lượng nước ở vòi</p>
+</div>
+</div>
+                </div>
+                <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                    <h2 class="text-gray-900 text-2xl font-bold mb-4">3 Phương án ứng viên</h2>
+                    <div class="space-y-4">
+                        <div class="border-2 border-primary rounded-xl p-5 bg-primary/5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-bold">PA1</span>
+                                <h3 class="text-gray-900 text-xl font-bold">"Barrier + UVC" (Đề xuất mạnh)</h3>
+</div>
+                            <p class="text-gray-700 mb-2"><strong>RO → Màng 0.2 µm → UVC (inline) → Vòi</strong></p>
+                            <p class="text-gray-600 text-sm">Logic: 0.2 µm chặn hạt/vi sinh, giúp nước "sạch quang" hơn → UVC hiệu quả và ổn định hơn. Phù hợp "POU – nước uống trực tiếp", bám QCVN 6-1 & NSF</p>
+</div>
+                        <div class="border border-gray-300 rounded-xl p-5 bg-gray-50">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="bg-gray-400 text-white px-3 py-1 rounded-full text-sm font-bold">PA2</span>
+                                <h3 class="text-gray-900 text-xl font-bold">"Silver-ion/Nano bạc + Barrier"</h3>
+</div>
+                            <p class="text-gray-700 mb-2"><strong>RO → Lõi kháng khuẩn (Ag/IONPURE/nano bạc) → Màng 0.2 µm → Bình → Vòi</strong></p>
+                            <p class="text-gray-600 text-sm">Logic: vật liệu kháng khuẩn giúp ức chế bám biofilm trong đường nước/bình; 0.2 µm chặn cơ học cuối</p>
+</div>
+                        <div class="border border-gray-300 rounded-xl p-5 bg-gray-50">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="bg-gray-400 text-white px-3 py-1 rounded-full text-sm font-bold">PA3</span>
+                                <h3 class="text-gray-900 text-xl font-bold">"Hybrid tối ưu" (BOM cao hơn)</h3>
+</div>
+                            <p class="text-gray-700 mb-2"><strong>RO → Lõi kháng khuẩn → 0.2 µm → UVC → Vòi</strong></p>
+                            <p class="text-gray-600 text-sm">Logic: vừa giảm hình thành biofilm (nguyên nhân gốc), vừa bất hoạt vi sinh cuối nguồn</p>
+</div>
+</div>
+</div>
+</div>
+        </main>
+    </section>
+
+    <section id="slide-7" class="slide">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-300 px-10 py-3 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div class="flex items-center gap-4">
+                <div class="size-6 text-primary">
+                    <span class="material-symbols-outlined text-3xl">biotech</span>
+</div>
+                <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-gray-900">Bảng điều khiển Dự án R&D</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 7/12
+</div>
+</div>
+        </header>
+        <main class="max-w-[1600px] mx-auto px-6 py-8">
+            <div class="flex flex-wrap justify-between items-end gap-3 mb-10">
+<div class="flex flex-col gap-2">
+                    <h1 class="text-gray-900 text-4xl font-black leading-tight tracking-[-0.033em]">Slide 7: Lộ trình thực hiện</h1>
+                    <p class="text-gray-600 text-lg font-normal leading-normal">Công nghệ kháng khuẩn cho máy lọc nước M25</p>
+</div>
+</div>
+            <div class="space-y-6">
+                <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                    <h2 class="text-gray-900 text-2xl font-bold mb-4">Lộ trình 4 giai đoạn</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex gap-3">
+                            <span class="text-primary font-bold text-xl">GĐ1:</span>
+                            <p class="text-gray-700">Chuẩn hóa: tiêu chí test, ngưỡng pass/fail, quy cách lắp, checklist bảo trì</p>
+</div>
+                        <div class="flex gap-3">
+                            <span class="text-primary font-bold text-xl">GĐ2:</span>
+                            <p class="text-gray-700">Thiết kế cấu hình: chọn cấu hình tối ưu theo hiệu quả–chi phí–rủi ro</p>
+</div>
+                        <div class="flex gap-3">
+                            <span class="text-primary font-bold text-xl">GĐ3:</span>
+                            <p class="text-gray-700">Thử nghiệm xác nhận: test lab + thử mô phỏng sử dụng (nước đứng/ít dùng)</p>
+</div>
+                        <div class="flex gap-3">
+                            <span class="text-primary font-bold text-xl">GĐ4:</span>
+                            <p class="text-gray-700">Đề xuất triển khai: BOM, hướng dẫn kỹ thuật, yêu cầu chất lượng, kế hoạch chứng nhận</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+    </section>
+
+    <section id="slide-8" class="slide">
+        <header class="flex items-center justify-between border-b border-gray-300 px-8 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+<div class="flex flex-col">
+                <h2 class="text-xl font-bold tracking-tight text-gray-900">Slide 8 - Cấu hình & Thiết kế UVC</h2>
+</div>
+<div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 8/12
+                </div>
+</div>
+</header>
+        <div class="p-8 max-w-[1800px] mx-auto w-full space-y-8">
+            <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                <h2 class="text-gray-900 text-2xl font-bold mb-4">Cấu hình kỹ thuật đề xuất</h2>
+                <div class="bg-primary/5 border border-primary/30 rounded-lg p-4 mb-4">
+                    <h3 class="text-primary font-bold mb-2">Phương án lắp đặt sơ bộ (Core proposal):</h3>
+                    <p class="text-gray-700 font-medium">Nước đầu vào → Lọc thô 5 µm → RO → Lõi chức năng tẩm nano bạc → Màng lọc 0.2 µm → Bình chứa nhựa → Vòi</p>
+                    <p class="text-gray-600 text-sm mt-2">• Lõi nano bạc đặt trước 0.2 µm để ức chế biofilm trên bề mặt màng</p>
+                    <p class="text-gray-600 text-sm">• Màng 0.2 µm là lớp chặn cơ học cuối: ngăn mạt than & vi khuẩn</p>
+</div>
+                <div class="bg-gray-50 border border-gray-300 rounded-lg p-4">
+                    <h3 class="text-gray-900 font-bold mb-2">Tùy chọn tăng cường:</h3>
+                    <p class="text-gray-700">UV sau 0.2 µm để diệt phần vi khuẩn tái nhiễm trong giai đoạn cuối</p>
+</div>
+</div>
+            <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                <h2 class="text-gray-900 text-2xl font-bold mb-4">Thiết kế & lựa chọn đèn UVC cho M25</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-gray-900 font-bold mb-2">Cơ sở khoa học & liều thiết kế</h3>
+                        <p class="text-gray-600 text-sm mb-2">UVC (200–280 nm), vùng hiệu quả mạnh ~253.7 nm → gây dimer thymine, làm vi sinh mất khả năng sinh sản</p>
+                        <p class="text-gray-600 text-sm mb-2"><strong>Bảng độ nhạy UV (99% bất hoạt):</strong> E. coli: 5–7 mJ/cm², Coliforms: 5–10, Streptococci faecal: 10–20, P. aeruginosa: 10–20, Clostridia (bào tử): 30–60</p>
+                        <p class="text-gray-700 font-semibold">Chọn liều UV thiết kế: <span class="text-primary">40 mJ/cm²</span> (bao phủ Clostridia & theo thực hành NSF/ANSI 58)</p>
+</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h3 class="text-gray-900 font-bold mb-2 text-sm">Điều kiện nước đầu vào</h3>
+                            <ul class="text-gray-600 text-sm space-y-1">
+                                <li>• Lưu lượng: 1.5–2.0 LPM</li>
+                                <li>• Độ đục: &lt; 2 NTU</li>
+                                <li>• UVT (254 nm): ≥ 90–95%</li>
+                            </ul>
+</div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h3 class="text-gray-900 font-bold mb-2 text-sm">Thiết kế buồng UV</h3>
+                            <ul class="text-gray-600 text-sm space-y-1">
+                                <li>• Hình học: ống trụ inox 304/316L hoặc nhựa chịu UV (PPSU, PEEK)</li>
+                                <li>• Kích thước: ID 10–15 mm, chiều dài 80–120 mm</li>
+                                <li>• Vỏ đèn: thạch anh (Quartz) truyền UV &gt;90%</li>
+                                <li>• Hệ số an toàn: 1.5–2.0</li>
+                            </ul>
+</div>
+</div>
+                    <div class="bg-primary/5 border border-primary/30 rounded-lg p-4">
+                        <h3 class="text-gray-900 font-bold mb-2">Lựa chọn mô-đun đèn</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                            <div>
+                                <span class="text-gray-600">Bước sóng:</span>
+                                <span class="text-gray-900 font-semibold ml-1">253.7 nm</span>
+</div>
+                            <div>
+                                <span class="text-gray-600">Công suất:</span>
+                                <span class="text-gray-900 font-semibold ml-1">4–6 W</span>
+</div>
+<div>
+                                <span class="text-gray-600">Lưu lượng:</span>
+                                <span class="text-gray-900 font-semibold ml-1">≤ 2 LPM</span>
+</div>
+<div>
+                                <span class="text-gray-600">Tuổi thọ:</span>
+                                <span class="text-gray-900 font-semibold ml-1">≥ 8,000–9,000h</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+    <section id="slide-9" class="slide">
+        <header class="flex items-center justify-between border-b border-gray-300 px-8 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+            <div class="flex flex-col">
+                <h2 class="text-xl font-bold tracking-tight text-gray-900">Slide 9 - Kế hoạch & So sánh công nghệ</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 9/12
+</div>
+</div>
+        </header>
+        <div class="p-8 max-w-[1800px] mx-auto w-full space-y-8">
+            <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                <h2 class="text-gray-900 text-2xl font-bold mb-4">Kế hoạch 6 tháng</h2>
+                <div class="space-y-3">
+                    <div class="flex gap-4 items-start">
+                        <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-bold">Tháng 1–2</span>
+                        <p class="text-gray-700">Chuẩn hóa tiêu chí test + khảo sát/benchmark vật liệu & cấu hình</p>
+</div>
+                    <div class="flex gap-4 items-start">
+                        <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-bold">Tháng 3–4</span>
+                        <p class="text-gray-700">Làm prototype + test vòng 1 (hiệu quả vi sinh, lưu lượng, độ bền)</p>
+</div>
+                    <div class="flex gap-4 items-start">
+                        <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-bold">Tháng 5</span>
+                        <p class="text-gray-700">Tối ưu + test xác nhận + báo cáo đề xuất triển khai</p>
+</div>
+</div>
+</div>
+            <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                <h2 class="text-gray-900 text-2xl font-bold mb-4">So sánh nhanh các công nghệ</h2>
+                <div class="space-y-4">
+                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                        <h3 class="text-gray-900 font-bold mb-2">IONPURE (silver-ion glass)</h3>
+                        <p class="text-gray-600 text-sm mb-2">Phụ gia vô cơ, giải phóng Ag⁺ từ từ; tương thích nhiều nhựa; có dẫn chứng tiêu chuẩn test JIS Z 2801/ISO 22196</p>
+                        <p class="text-gray-600 text-sm"><strong>Ứng dụng:</strong> nhựa chi tiết đầu vòi/đường nước/chi tiết tiếp xúc ẩm</p>
+</div>
+                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                        <h3 class="text-gray-900 font-bold mb-2">KDF</h3>
+                        <p class="text-gray-600 text-sm mb-2">Vật liệu redox Cu-Zn, có chứng chỉ NSF/ANSI/CAN 61 nhưng cần thời gian đánh giá thực tế</p>
+                        <p class="text-gray-600 text-sm"><strong>Ứng dụng:</strong> tiền xử lý/tiền lọc hoặc cấu hình phù hợp; cân nhắc vận hành áp suất</p>
+</div>
+                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                        <h3 class="text-gray-900 font-bold mb-2">Nano bạc (AgNPs/Ag-impregnated)</h3>
+                        <p class="text-gray-600 text-sm mb-2">Hiệu quả kháng khuẩn tốt nhưng cần kiểm soát Ag⁺ trong nước; giá thành cao hơn</p>
+</div>
+                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                        <h3 class="text-gray-900 font-bold mb-2">Màng 0.2 µm</h3>
+                        <p class="text-gray-600 text-sm">"Barrier" mạnh nhưng cần đánh giá lưu lượng & nguy cơ nghẽn</p>
+</div>
+</div>
+                <div class="mt-4 bg-primary/5 border border-primary/30 rounded-lg p-4">
+                    <p class="text-gray-700 font-semibold">Chốt đề xuất: Chọn 1 cấu hình chính (nano bạc + 0.2 µm) + 1 option (UV) để không dàn trải</p>
+</div>
+</div>
+            <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                <h2 class="text-gray-900 text-2xl font-bold mb-4">Nguồn lực & Ngân sách</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <h3 class="text-gray-900 font-bold mb-2">Nhân sự</h3>
+                        <p class="text-gray-600 text-sm">R&D thử nghiệm + DQA + Mua hàng/Supplier</p>
+</div>
+                    <div>
+                        <h3 class="text-gray-900 font-bold mb-2">Thiết bị/test</h3>
+                        <p class="text-gray-600 text-sm">Test vi sinh/HPC, mô phỏng nước đứng 8–12h, đo lưu lượng/áp, kiểm soát di trú Ag⁺</p>
+</div>
+                    <div>
+                        <h3 class="text-gray-900 font-bold mb-2">Ngân sách</h3>
+                        <p class="text-gray-600 text-sm">Module UVC (4–6W), vật liệu buồng UV/quartz, màng 0.2 µm, chi phí test vi sinh/biodosimetry</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+    <section id="slide-10" class="slide">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-300 px-6 md:px-10 py-3 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div class="flex items-center gap-4 text-gray-900">
+                <div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined font-bold">science</span>
+</div>
+                <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] font-display text-gray-900">Dự án R&D M25</h2>
+            </div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 10/12
+                </div>
+            </div>
+        </header>
+<main class="flex-1 px-4 md:px-10 lg:px-40 py-8 flex flex-col items-center">
+            <div class="layout-content-container flex flex-col max-w-[1600px] w-full gap-6">
+<div class="flex flex-wrap justify-between items-end gap-3 py-4">
+<div class="flex min-w-72 flex-col gap-2">
+                        <h1 class="text-gray-900 text-4xl lg:text-5xl font-black leading-tight tracking-tight font-display uppercase">Slide 10 - Giá trị mang lại</h1>
+                        <p class="text-gray-600 text-lg font-normal leading-normal">Công nghệ kháng khuẩn cho máy lọc nước M25</p>
+</div>
+                            </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200 hover:border-primary/50 transition-all">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
+                            <h3 class="text-gray-900 text-xl font-bold">Chất lượng & Trải nghiệm KH</h3>
+</div>
+                        <p class="text-gray-600">Giảm tái nhiễm vi sinh ở đoạn cuối → nước ổn định hơn, giảm hiện tượng nhớt/đen/mùi</p>
+</div>
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200 hover:border-primary/50 transition-all">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">ads_click</span>
+</div>
+                            <h3 class="text-gray-900 text-xl font-bold">Giá trị sản phẩm</h3>
+</div>
+                        <p class="text-gray-600">Tạo điểm khác biệt M25: "kháng khuẩn cuối nguồn" (tăng cạnh tranh)</p>
+</div>
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200 hover:border-primary/50 transition-all">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">trending_down</span>
+</div>
+                            <h3 class="text-gray-900 text-xl font-bold">Vận hành & Bảo hành</h3>
+</div>
+                        <p class="text-gray-600">Giảm khiếu nại liên quan mùi/vi sinh; giảm chi phí hậu mãi</p>
+</div>
+</div>
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-6">
+                    <p class="text-amber-800 text-sm italic">💡 Tip: Kết quả định lượng sẽ được chốt sau vòng test tháng 3–4</p>
+</div>
+</div>
+</main>
+    </section>
+
+    <section id="slide-11" class="slide">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-10 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div class="flex items-center gap-4 text-gray-900">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 17.4264C16.7203 18.1174 20.2244 18.5217 24 18.5217C27.7756 18.5217 31.2797 18.1174 34.1739 17.4264C36.9144 16.7722 39.9967 15.2331 41.3563 14.1648L24.8486 40.6391C24.4571 41.267 23.5429 41.267 23.1514 40.6391L6.64374 14.1648C8.00331 15.2331 11.0856 16.7722 13.8261 17.4264Z" fill="currentColor"></path>
+</svg>
+</div>
+                <h2 class="text-gray-900 text-lg font-bold leading-tight tracking-tight font-display">Hệ thống R&D M25</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 11/12
+                </div>
+</div>
+</header>
+<main class="flex-1 flex justify-center py-10">
+            <div class="layout-content-container flex flex-col max-w-[1600px] flex-1 px-6">
+<div class="flex flex-wrap justify-between items-start gap-4 mb-10">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-primary/20">Slide 09</span>
+                            <h1 class="text-gray-900 text-5xl font-black leading-none tracking-tighter font-display uppercase">Rủi ro & Kiểm soát</h1>
+</div>
+                        <p class="text-gray-600 text-xl font-light">Công nghệ kháng khuẩn cho máy lọc nước M25 — Phân tích & Chiến lược giảm thiểu</p>
+</div>
+</div>
+                <div class="space-y-6">
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-red-500">warning</span>
+                            Rủi ro chính
+                            </h2>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <h3 class="text-gray-900 font-bold mb-1">Ag⁺ di trú vượt ngưỡng</h3>
+                                <p class="text-gray-600 text-sm">Nếu dùng nano bạc/IONPURE → cần tiêu chí kiểm soát</p>
+</div>
+                            <div class="border-l-4 border-amber-500 pl-4">
+                                <h3 class="text-gray-900 font-bold mb-1">Giảm lưu lượng / nghẽn</h3>
+                                <p class="text-gray-600 text-sm">Do màng 0.2 µm (tùy chất lượng nước & thiết kế)</p>
+</div>
+                            <div class="border-l-4 border-amber-500 pl-4">
+                                <h3 class="text-gray-900 font-bold mb-1">UV: Ràng buộc không gian, điện, tuổi thọ</h3>
+                                <p class="text-gray-600 text-sm">An toàn tia UVC: yêu cầu che chắn, tránh rò tia ra ngoài; UL tập trung an toàn điện–quang–nhiệt</p>
+                                <p class="text-gray-600 text-sm mt-1">Suy giảm công suất theo thời gian (lão hóa 20–30%/năm) + bám cặn quartz → phải có hệ số an toàn và kế hoạch bảo trì</p>
+</div>
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h3 class="text-gray-900 font-bold mb-1">Supplier/chi phí</h3>
+                                <p class="text-gray-600 text-sm">Vật liệu kháng khuẩn có thể tăng BOM</p>
+                                            </div>
+</div>
+                                            </div>
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-500">check_circle</span>
+                            Điều kiện thành công
+                        </h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+                                <span class="text-gray-700">Có test plan chuẩn + điều kiện mô phỏng đúng tình huống "nước đứng 8–12h"</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+                                <span class="text-gray-700">"Đầu vào đủ sạch quang": độ đục thấp, UVT cao; tối ưu bằng việc đặt 0.2 µm trước UVC</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+                                <span class="text-gray-700">Chốt 1 cấu hình "tối ưu hiệu quả–chi phí–rủi ro" thay vì triển khai dàn trải nhiều option</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+                                <span class="text-gray-700">Phối hợp liên phòng: R&D thử nghiệm + DQA + mua hàng + thiết kế</span>
+                            </li>
+                        </ul>
+</div>
+</div>
+</div>
+</main>
+    </section>
+
+    <section id="slide-12" class="slide">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-6 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+            <div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
+</svg>
+</div>
+                <h2 class="text-gray-900 text-xl font-bold tracking-tight">Talent25</h2>
+</div>
+            <div class="flex gap-3">
+                <div class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-5 bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                    Slide 12/12
+                </div>
+</div>
+</header>
+        <main class="flex-1 flex flex-col items-center justify-center px-4 py-16 relative">
+            <div class="layout-content-container relative z-10 flex flex-col max-w-[1600px] w-full gap-12">
+                <div class="text-center space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/30 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+                        <span class="material-symbols-outlined text-sm">gavel</span>
+                        Kiến nghị & Đề xuất phê duyệt
+</div>
+                    <h1 class="text-gray-900 tracking-tighter text-5xl md:text-7xl font-bold leading-[1.1]">
+                        <span class="text-gradient">Kiến nghị</span> <br/>
+                        <span class="text-primary underline underline-offset-8 decoration-2 decoration-primary/30">Phê duyệt dự án</span>
+                    </h1>
+</div>
+                <div class="space-y-6">
+                    <div class="glass-panel rounded-xl p-6 border-2 border-primary shadow-xl">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">recommend</span>
+                            Kiến nghị
+                            </h2>
+                        <div class="space-y-4">
+                            <div class="bg-primary/5 border border-primary/30 rounded-lg p-4">
+                                <h3 class="text-primary font-bold mb-2">Phê duyệt triển khai prototype theo cấu hình:</h3>
+                                <ul class="space-y-2 text-gray-700 ml-4">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary font-bold">(A)</span>
+                                        <span>Nano bạc + 0.2 µm (core)</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary font-bold">(B)</span>
+                                        <span>Thêm UV sau 0.2 µm (option) - PA1: Barrier + UVC hoặc PA3: Hybrid tối ưu</span>
+                                    </li>
+                                </ul>
+</div>
+                            <div class="bg-gray-50 border border-gray-300 rounded-lg p-4">
+                                <p class="text-gray-700"><strong>Phê duyệt ngân sách:</strong> Module UVC (4–6W), vật liệu buồng UV/quartz, màng 0.2 µm, và chi phí test vi sinh/biodosimetry</p>
+</div>
+</div>
+                                            </div>
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-500">verified</span>
+                            Đề xuất BLĐ duyệt
+                        </h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            Cho phép chạy thử nghiệm trong 6 tháng theo kế hoạch và chốt quyết định triển khai sau vòng test xác nhận.
+                        </p>
+</div>
+                    <div class="glass-panel rounded-xl p-6 border border-gray-200 bg-primary/5">
+                        <h2 class="text-gray-900 text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">handshake</span>
+                            Cam kết nhóm
+                        </h2>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-primary text-sm mt-1">check</span>
+                                <span>Đảm bảo tiến độ, báo cáo theo mốc tháng</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-primary text-sm mt-1">check</span>
+                                <span>Minh bạch dữ liệu test và rủi ro</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-primary text-sm mt-1">check</span>
+                                <span>Tuân thủ các tiêu chuẩn QCVN 6-1:2010/BYT, NSF/ANSI 58, UL</span>
+                            </li>
+                        </ul>
+                                            </div>
+</div>
+</div>
+</main>
+        <footer class="p-8 text-center border-t border-gray-200 bg-white/90 backdrop-blur-md">
+            <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-xs font-medium tracking-wide">
+                    © 2024 TALENT25 CORPORATION. TÀI LIỆU NGHIÊN CỨU NỘI BỘ - BẢO MẬT CAO.
+                </p>
+                <div class="flex gap-6">
+                    <span class="text-gray-500 text-[10px] font-bold flex items-center gap-1 uppercase">
+                        <span class="material-symbols-outlined text-sm">verified_user</span> 
+                        Confidential
+                    </span>
+                    <span class="text-gray-500 text-[10px] font-bold flex items-center gap-1 uppercase">
+                        <span class="material-symbols-outlined text-sm">language</span>
+                        RD-M25-GLOBAL
+                    </span>
+</div>
+</div>
+        </footer>
+    </section>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        const presentation = document.getElementById('presentation');
+        let currentSlide = 1;
+        const totalSlides = 12;
 
-        document.getElementById('total-slides').textContent = totalSlides;
-
-        function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (n + totalSlides) % totalSlides;
-            slides[currentSlide].classList.add('active');
+        function showSlide(n, skipAnimation = false) {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.slide-indicator');
             
-            document.getElementById('current-slide').textContent = currentSlide + 1;
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
             
-            // Update button states
-            document.getElementById('prev-btn').disabled = currentSlide === 0;
-            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
-        }
-
-        function changeSlide(direction) {
-            if (direction < 0 && currentSlide > 0) {
-                showSlide(currentSlide + direction);
-            } else if (direction > 0 && currentSlide < totalSlides - 1) {
-                showSlide(currentSlide + direction);
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                if (currentSlide > 0) changeSlide(-1);
-            } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
-                if (currentSlide < totalSlides - 1) changeSlide(1);
-            } else if (e.key === 'f' || e.key === 'F') {
-                toggleFullscreen();
-            } else if (e.key === 'Escape') {
-                exitFullscreen();
-            } else if (e.key === 'Home') {
-                showSlide(0);
-            } else if (e.key === 'End') {
-                showSlide(totalSlides - 1);
-            }
-        });
-
-        // Fullscreen functions
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                presentation.requestFullscreen().catch(err => {
-                    console.log('Fullscreen error:', err);
+            const activeSlideElement = document.getElementById(`slide-${currentSlide}`);
+            const currentlyActive = document.querySelector('.slide.active');
+            
+            if (skipAnimation || !currentlyActive) {
+                // First load - no animation
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                    slide.style.opacity = '0';
+                    slide.style.transform = '';
                 });
-                presentation.classList.add('fullscreen');
+                
+                if (activeSlideElement) {
+                    activeSlideElement.classList.add('active');
+                    activeSlideElement.style.opacity = '1';
+                    activeSlideElement.style.transform = '';
+                }
             } else {
-                exitFullscreen();
+                // Fade out current slide
+                currentlyActive.style.transition = 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                currentlyActive.style.opacity = '0';
+                currentlyActive.style.transform = 'translateY(-20px)';
+                
+                setTimeout(() => {
+                    currentlyActive.classList.remove('active');
+                    
+                    // Fade in new slide
+                    if (activeSlideElement) {
+                        activeSlideElement.style.opacity = '0';
+                        activeSlideElement.style.transform = 'translateY(20px)';
+                        activeSlideElement.classList.add('active');
+                        
+                        requestAnimationFrame(() => {
+                            activeSlideElement.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                            activeSlideElement.style.opacity = '1';
+                            activeSlideElement.style.transform = 'translateY(0)';
+                            
+                            // Animate child elements with stagger
+                            const elements = activeSlideElement.querySelectorAll('.glass-panel, h1, h2, h3, .grid > div, ul, ol');
+                            elements.forEach((el, index) => {
+                                if (el.offsetParent !== null) { // Only visible elements
+                                    el.style.opacity = '0';
+                                    el.style.transform = 'translateY(15px)';
+                                    setTimeout(() => {
+                                        el.style.transition = `opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.08}s, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.08}s`;
+                                        el.style.opacity = '1';
+                                        el.style.transform = 'translateY(0)';
+                                    }, 100);
+                                }
+                            });
+                        });
+                    }
+                }, 300);
             }
+            
+            // Update indicators
+            indicators.forEach(ind => {
+                ind.classList.remove('bg-primary', 'w-2');
+                ind.classList.add('bg-gray-200', 'w-1.5');
+            });
+            
+            const activeIndicator = document.querySelector(`.slide-indicator[data-slide="${currentSlide}"]`);
+            if (activeIndicator) {
+                activeIndicator.classList.remove('bg-gray-200', 'w-1.5');
+                activeIndicator.classList.add('bg-primary', 'w-2');
+            }
+            
+            document.getElementById('current-slide').textContent = currentSlide;
+            
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function exitFullscreen() {
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-                presentation.classList.remove('fullscreen');
-            }
+        let isTransitioning = false;
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
         }
 
-        // Handle fullscreen change
-        document.addEventListener('fullscreenchange', function() {
-            if (!document.fullscreenElement) {
-                presentation.classList.remove('fullscreen');
+        function prevSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        document.getElementById('next-slide').addEventListener('click', () => {
+            if (!isTransitioning) {
+                isTransitioning = true;
+                nextSlide();
+                setTimeout(() => { isTransitioning = false; }, 900);
+            }
+        });
+        document.getElementById('prev-slide').addEventListener('click', () => {
+            if (!isTransitioning) {
+                isTransitioning = true;
+                prevSlide();
+                setTimeout(() => { isTransitioning = false; }, 900);
             }
         });
 
-        // Click on slide to go next (right side) or previous (left side)
-        slides.forEach(slide => {
-            slide.addEventListener('click', function(e) {
-                if (e.target.classList.contains('nav-btn') || 
-                    e.target.closest('.nav-controls') || 
-                    e.target.closest('.slide-counter') ||
-                    e.target.closest('.help-text')) {
-                    return;
-                }
-                
-                const clickX = e.clientX;
-                const slideWidth = slide.offsetWidth;
-                const clickPercent = (clickX - slide.getBoundingClientRect().left) / slideWidth;
-                
-                if (clickPercent < 0.3 && currentSlide > 0) {
-                    changeSlide(-1);
-                } else if (clickPercent > 0.7 && currentSlide < totalSlides - 1) {
-                    changeSlide(1);
-                }
+        // Keyboard navigation với debounce
+        document.addEventListener('keydown', (e) => {
+            if (isTransitioning) return;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                isTransitioning = true;
+                nextSlide();
+                setTimeout(() => { isTransitioning = false; }, 900);
+            }
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                isTransitioning = true;
+                prevSlide();
+                setTimeout(() => { isTransitioning = false; }, 900);
+            }
+        });
+
+        // Click on indicators
+        document.querySelectorAll('.slide-indicator').forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                currentSlide = index + 1;
+                showSlide(currentSlide);
+                setTimeout(() => { isTransitioning = false; }, 900);
             });
         });
 
-        // Initialize
-        showSlide(0);
+        // Smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        showSlide(1, true); // Load first slide without animation
     </script>
 </body>
 </html>
