@@ -1003,6 +1003,84 @@
                 .chevron-path-last {
                     clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 5% 50%, 0% 0%);
                 }
+                /* Modal styles */
+                .modal-overlay {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.6);
+                    backdrop-filter: blur(4px);
+                    z-index: 9999;
+                    align-items: center;
+                    justify-content: center;
+                    opacity: 0;
+                    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                .modal-overlay.active {
+                    display: flex;
+                    opacity: 1;
+                }
+                .modal-content {
+                    background: white;
+                    border-radius: 1rem;
+                    max-width: 95%;
+                    width: 1400px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                    transform: scale(0.9) translateY(20px);
+                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                .modal-overlay.active .modal-content {
+                    transform: scale(1) translateY(0);
+                }
+                .modal-header {
+                    padding: 1.5rem;
+                    border-bottom: 1px solid #e5e7eb;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .modal-body {
+                    padding: 1.5rem;
+                }
+                .modal-close {
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: #6b7280;
+                    padding: 0.25rem;
+                    line-height: 1;
+                    transition: all 0.2s;
+                    width: 2rem;
+                    height: 2rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 0.5rem;
+                }
+                .modal-close:hover {
+                    color: #1f2937;
+                    background: #f3f4f6;
+                }
+                .modal-content::-webkit-scrollbar {
+                    width: 8px;
+                }
+                .modal-content::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 4px;
+                }
+                .modal-content::-webkit-scrollbar-thumb {
+                    background: #cbd5e1;
+                    border-radius: 4px;
+                }
+                .modal-content::-webkit-scrollbar-thumb:hover {
+                    background: #94a3b8;
+                }
             </style>
             <div class="mb-8 flex items-center justify-between gap-4">
                 <div>
@@ -1109,7 +1187,7 @@
                     </div>
                     <div>
                         <h3 class="text-gray-900 font-bold mb-2">Ngân sách</h3>
-                        <p class="text-gray-600 text-sm">Dự kiến 500 triệu</p>
+                        <p class="text-gray-600 text-sm cursor-pointer hover:text-primary transition-colors" onclick="openBudgetModal()">Dự kiến 500 triệu</p>
                     </div>
                 </div>
             </div>
@@ -1648,6 +1726,143 @@
         });
 
         showSlide(1, true); // Load first slide without animation
+
+        // Modal functions
+        function openBudgetModal() {
+            const modal = document.getElementById('budgetModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeBudgetModal() {
+            const modal = document.getElementById('budgetModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('budgetModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeBudgetModal();
+                    }
+                });
+            }
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeBudgetModal();
+                }
+            });
+        });
     </script>
+
+    <!-- Budget Modal -->
+    <div id="budgetModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="text-xl font-bold text-gray-900">Chi tiết Ngân sách</h2>
+                <button class="modal-close" onclick="closeBudgetModal()" aria-label="Đóng">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Layout 2 cột: Chi phí và Phân tích lợi ích -->
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                    <!-- Chi phí chi tiết -->
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">account_balance</span>
+                            Chi phí đầu tư
+                        </h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                                <span class="text-gray-700 font-medium text-sm">1. Làm buồng sạch</span>
+                                <span class="text-gray-900 font-bold">250 triệu</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                                <span class="text-gray-700 font-medium text-sm">2. Thử nghiệm UV</span>
+                                <span class="text-gray-900 font-bold">100 triệu</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                                <span class="text-gray-700 font-medium text-sm">3. Thử nghiệm vật liệu</span>
+                                <span class="text-gray-900 font-bold">100 triệu</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                                <span class="text-gray-700 font-medium text-sm">4. Thử nghiệm sục rửa</span>
+                                <span class="text-gray-900 font-bold">50 triệu</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-primary/10 rounded-lg border-2 border-primary mt-3">
+                                <span class="text-gray-900 font-bold">Tổng chi phí</span>
+                                <span class="text-primary font-bold text-lg">500 triệu VND</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phân tích lợi ích -->
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">trending_up</span>
+                            Phân tích lợi ích
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                <p class="text-xs text-gray-600 mb-1">Số ca lỗi (2025)</p>
+                                <p class="text-xl font-bold text-blue-700">1,900 ca/năm</p>
+                            </div>
+                            <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                <p class="text-xs text-gray-600 mb-1">Chi phí/ca</p>
+                                <p class="text-xl font-bold text-blue-700">200k VND</p>
+                            </div>
+                            <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                                <p class="text-xs text-gray-600 mb-1">Chi phí/năm</p>
+                                <p class="text-xl font-bold text-red-700">380 triệu</p>
+                            </div>
+                            <div class="p-3 bg-green-50 rounded-lg border border-green-200">
+                                <p class="text-xs text-gray-600 mb-1">Mục tiêu giảm 50%</p>
+                                <p class="text-xl font-bold text-green-700">950 ca/năm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROI và thời gian hoàn vốn - Layout ngang -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">calculate</span>
+                        Phân tích ROI
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border-2 border-green-300">
+                            <p class="text-xs text-gray-600 mb-1">Tiết kiệm hàng năm</p>
+                            <p class="text-2xl font-bold text-green-700 mb-1">190 triệu VND</p>
+                            <p class="text-xs text-gray-500">950 ca × 200k VND</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
+                            <p class="text-xs text-gray-600 mb-1">Thời gian hoàn vốn</p>
+                            <p class="text-2xl font-bold text-gray-900">2.6 năm</p>
+                            <p class="text-xs text-gray-500 mt-1">≈ 2 năm 8 tháng</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
+                            <p class="text-xs text-gray-600 mb-1">ROI sau 5 năm</p>
+                            <p class="text-2xl font-bold text-green-600">90%</p>
+                            <p class="text-xs text-gray-500 mt-1">Lợi nhuận: 450 triệu</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <div class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-yellow-600 text-sm mt-0.5">info</span>
+                            <p class="text-xs text-yellow-800">Dự án sẽ bắt đầu hoàn vốn từ năm thứ 3 và mang lại lợi ích dài hạn cho doanh nghiệp.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
