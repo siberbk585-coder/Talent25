@@ -1187,7 +1187,14 @@
                     </div>
                     <div>
                         <h3 class="text-gray-900 font-bold mb-2">Ngân sách</h3>
-                        <p class="text-gray-600 text-sm cursor-pointer hover:text-primary transition-colors" onclick="openBudgetModal()">Dự kiến 500 triệu</p>
+                        <div class="group cursor-pointer" onclick="openBudgetModal()">
+                            <p class="text-gray-600 text-sm cursor-pointer hover:text-primary transition-all inline-flex items-center gap-1.5 underline decoration-dotted decoration-primary/50 underline-offset-2 group-hover:decoration-primary group-hover:decoration-solid group-hover:bg-primary/5 px-2 py-1 rounded-md">
+                                <span class="material-symbols-outlined text-sm">info</span>
+                                <span>Dự kiến 500 triệu</span>
+                                <span class="material-symbols-outlined text-xs opacity-50 group-hover:opacity-100 transition-opacity">open_in_new</span>
+                            </p>
+                            <p class="text-[10px] text-primary/70 mt-1 ml-7 font-medium">Click để xem chi tiết</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1812,19 +1819,19 @@
                         </h3>
                         <div class="grid grid-cols-2 gap-3">
                             <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                                <p class="text-xs text-gray-600 mb-1">Số ca lỗi (2025)</p>
+                                <p class="text-xs text-gray-600 mb-1">Số ca lỗi liên quan đến màu, mùi,vị nước (2025)</p>
                                 <p class="text-xl font-bold text-blue-700">1,900 ca/năm</p>
                             </div>
                             <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                                <p class="text-xs text-gray-600 mb-1">Chi phí/ca</p>
+                                <p class="text-xs text-gray-600 mb-1">Chi phí xử lý/ca</p>
                                 <p class="text-xl font-bold text-blue-700">200k VND</p>
                             </div>
                             <div class="p-3 bg-red-50 rounded-lg border border-red-200">
-                                <p class="text-xs text-gray-600 mb-1">Chi phí/năm</p>
+                                <p class="text-xs text-gray-600 mb-1">Chi phí xử lý/năm</p>
                                 <p class="text-xl font-bold text-red-700">380 triệu</p>
                             </div>
                             <div class="p-3 bg-green-50 rounded-lg border border-green-200">
-                                <p class="text-xs text-gray-600 mb-1">Mục tiêu giảm 50%</p>
+                                <p class="text-xs text-gray-600 mb-1">Mục tiêu giảm 50% số ca lỗi liên quan đến màu, mùi, vị nước</p>
                                 <p class="text-xl font-bold text-green-700">950 ca/năm</p>
                             </div>
                         </div>
