@@ -81,7 +81,7 @@ const MEMBER_TASKS_RAW = [
   {"row_number":81,"date":"15–21/06/2026","col_2":"Tuần 23","col_3":"Hoàn thiện hồ sơ sản xuất","col_4":"Nguyễn Thế Việt","col_6":"Đang thực hiện","col_7":""},
   {"row_number":82,"date":"22–30/06/2026","col_2":"Tuần 24","col_3":"Chuyển giao hồ sơ xuống nhà máy.","col_4":"Nguyễn Thế Việt","col_6":"Đang thực hiện","col_7":""},
   {"row_number":83,"date":"Từ 11/1 đến 16/1","col_2":"2","col_3":"Rà soát sơ đồ nguyên lý của sản phẩm. Phân tích, tính toán, mô phỏng thời gian, thể tích nước cần xả rửa ban đầu và định kỳ","col_4":"Nguyễn Văn Hiếu","col_6":"Hoàn thành","col_7":"Theo TC: Thể tích nước xả rửa (30-40)L. Thời gian xả rửa ban đầu 2h. Định kỳ 3 phút sau 24h."},
-  {"row_number":84,"date":"Từ 25/1 đến 30/1","col_2":"4","col_3":"Tìm hiểu màng UF, thử nghiệm loại bỏ cặn bẩn mạt than, thử nghiệm trên mẫu in 3D","col_4":"Nguyễn Văn Hiếu","col_6":"Hoàn thành","col_7":"Màng UF loại bỏ mạt than tốt hơn lõi pp nano. Đang test bền."},
+  {"row_number":84,"date":"Từ 25/1 đến 30/1","col_2":"4","col_3":"Tìm hiểu màng UF, thử nghiệm loại bỏ cặn bẩn mạt than, thử nghiệm trên mẫu in 3D","col_4":"Nguyễn Văn Hiếu","col_6":"Đang thực hiện","col_7":"Màng UF loại bỏ mạt than tốt hơn lõi pp nano. Đang test bền."},
   {"row_number":85,"date":"Từ 8/2 đến 13/2","col_2":"6","col_3":"Thử nghiệm giả lập điều kiện nhiễm khuẩn. Thử nghiệm tính năng lọc và xả rửa tự động","col_4":"Nguyễn Văn Hiếu","col_6":"Đang thực hiện","col_7":""},
   {"row_number":86,"date":"Từ 22/2 đến 27/2","col_2":"8","col_3":"Theo dõi kết quả thử nghiệm và test bền","col_4":"Nguyễn Văn Hiếu","col_6":"","col_7":""},
   {"row_number":87,"date":"Từ 8/3 đến 13/3","col_2":"10","col_3":"Đàm phán NCC mở khuôn nắp chụp màng UF. Đàm phán NCC gia công mạch in phíp đồng","col_4":"Nguyễn Văn Hiếu","col_6":"","col_7":""},
@@ -94,3 +94,4 @@ const MEMBER_TASKS_RAW = [
   {"row_number":94,"date":"Từ 7/6 đến 12/6","col_2":"23","col_3":"Sản xuất lô T1 tại TCM đánh giá mức độ ổn định và chất lượng sản phẩm","col_4":"Nguyễn Văn Hiếu","col_6":"","col_7":""},
   {"row_number":95,"date":"Từ 14/6 đến 19/6","col_2":"24","col_3":"Hoàn thiện hồ sơ, ban giao các phòng ban sản xuất","col_4":"Nguyễn Văn Hiếu","col_6":"","col_7":""}
 ];
+
