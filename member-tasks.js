@@ -94,4 +94,3 @@ const MEMBER_TASKS_RAW = [
   {"row_number":94,"date":"Từ 7/6 đến 12/6","col_2":"23","col_3":"Sản xuất lô T1 tại TCM đánh giá mức độ ổn định và chất lượng sản phẩm","col_4":"Nguyễn Văn Hiếu","col_6":"","col_7":""},
   {"row_number":95,"date":"Từ 14/6 đến 19/6","col_2":"24","col_3":"Hoàn thiện hồ sơ, ban giao các phòng ban sản xuất","col_4":"Nguyễn Văn Hiếu","col_6":"","col_7":""}
 ];
-
