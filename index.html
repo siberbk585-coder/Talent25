@@ -141,6 +141,16 @@
         .pulse-animation {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+        /* Hiệu ứng ngọn lửa cho thanh tiến độ tổng thể */
+        @keyframes flameFlicker {
+            0%, 100% { transform: translate(50%, -50%) scale(1) rotate(-5deg); opacity: 1; filter: drop-shadow(0 0 4px #f97316); }
+            25% { transform: translate(50%, -50%) scale(1.08) rotate(3deg); opacity: 0.95; filter: drop-shadow(0 0 8px #fb923c); }
+            50% { transform: translate(50%, -50%) scale(0.98) rotate(-2deg); opacity: 1; filter: drop-shadow(0 0 6px #f97316); }
+            75% { transform: translate(50%, -50%) scale(1.05) rotate(4deg); opacity: 0.98; filter: drop-shadow(0 0 10px #ea580c); }
+        }
+        .progress-flame {
+            animation: flameFlicker 1.2s ease-in-out infinite;
+        }
         /* Smooth scale on hover */
         .smooth-scale {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -282,6 +292,14 @@
     </style>
 </head>
 <body class="text-gray-900 min-h-screen flex flex-col overflow-x-hidden bg-white">
+    <!-- Nút mở YouTube Video - Chỉ hiện ở slide 2 -->
+    <a href="https://youtu.be/9UscYcdLwg0" target="_blank" rel="noopener noreferrer" id="youtube-video-btn" class="fixed bottom-6 left-6 z-50 flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-xl shadow-lg shadow-red-900/30 hover:shadow-xl hover:scale-105 transition-all font-semibold text-sm" title="Xem video trên YouTube" style="display: none;">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        <span>Xem video</span>
+    </a>
+
     <!-- Navigation Controller -->
     <div id="slide-controller" class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full border border-primary/20 shadow-xl">
         <button id="prev-slide" class="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 hover:bg-primary hover:text-white text-primary transition-all">
@@ -414,7 +432,7 @@
                                     <div class="w-[2px] bg-gray-200 h-8 grow"></div>
 </div>
 <div class="flex flex-col pb-4">
-                                    <p class="text-gray-900 text-lg font-bold">Thực trạng: Tái nhiễm sau RO (bình/ống/vòi)</p>
+                                    <p class="text-gray-900 text-lg font-bold">Thực trạng: Tái nhiễm sau màng RO (bình/ống/vòi)</p>
                                     <p class="text-gray-600 text-sm font-normal mt-1 leading-snug">
                                         Máy được lắp đặt tại nhà khách hàng với nhiều điều kiện môi trường khác nhau.
                                     </p>
@@ -473,11 +491,11 @@
 <div class="w-full h-full flex items-center justify-center">
                                     <!-- Hình ảnh từ Google Drive - Cần set quyền "Anyone with the link can view" -->
                                     <img 
-                                        src="https://lh3.googleusercontent.com/d/1q3PZsz6uDz9bGNUjXDbRmbM9GOqZlUGf" 
+                                        src="https://drive.google.com/thumbnail?id=1q3PZsz6uDz9bGNUjXDbRmbM9GOqZlUGf&sz=w1200" 
                                         alt="Sơ đồ rủi ro: Các khu vực nguy cơ cao"
                                         class="w-auto h-auto object-contain rounded-xl shadow-lg"
                                         style="max-height: 350px; max-width: 90%;"
-                                        onerror="console.error('Không thể tải hình ảnh. Vui lòng kiểm tra quyền chia sẻ file trên Google Drive.'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                        onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=1q3PZsz6uDz9bGNUjXDbRmbM9GOqZlUGf';"
                                     />
                                     <div class="hidden flex-col items-center justify-center p-8 bg-amber-50 border-2 border-amber-200 rounded-xl">
                                         <span class="material-symbols-outlined text-amber-500 text-sm mb-4">image_not_supported</span>
@@ -547,23 +565,23 @@
                                     <div class="space-y-3 mt-2">
                                         <div class="flex items-start gap-4 bg-white rounded-lg p-3 border border-primary/20 shadow-sm">
                                             <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 text-white font-black text-lg flex items-center justify-center shadow-lg border-2 border-white ring-2 ring-sky-400/30">S</span>
-                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Specific:</span> Nâng cao khả năng kháng khuẩn và chống tái nhiễm khuẩn thông qua 1 hệ thống.</p>
+                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Specific:</span> Xây dựng giải pháp kháng khuẩn & chống tái nhiễm cho hệ thống nước tinh khiết trên máy M25 (ưu tiên các vị trí dễ tái nhiễm vòi/cụm chức năng/bình chứa nhựa).</p>
                                         </div>
                                         <div class="flex items-start gap-4 bg-white rounded-lg p-3 border border-primary/20 shadow-sm">
                                             <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-green-500 text-white font-black text-lg flex items-center justify-center shadow-lg border-2 border-white ring-2 ring-emerald-400/30">M</span>
-                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Measurable:</span> Đo lường bằng kết quả đánh giá theo tiêu chuẩn Quốc Gia và Quốc Tế.</p>
+                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Measurable:</span> Đánh giá theo QCVN 6-1:2010/BYT (vi sinh nước uống), ISO 22196 (kháng khuẩn bề mặt nhựa), hoặc ISO 7581:2023 (Kháng khuẩn trên bề mặt không xốp trong điều kiện "khô").</p>
                                         </div>
                                         <div class="flex items-start gap-4 bg-white rounded-lg p-3 border border-primary/20 shadow-sm">
                                             <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 text-white font-black text-lg flex items-center justify-center shadow-lg border-2 border-white ring-2 ring-amber-400/30">A</span>
-                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Achievable:</span> Có cơ sở khoa học, am hiểu hệ thống lọc nước.</p>
+                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Achievable:</span> Hoàn thiện ≥2 phương án, thử nghiệm–so sánh và chọn 01 phương án tối ưu để làm mẫu máy thử nghiệm.</p>
                                         </div>
                                         <div class="flex items-start gap-4 bg-white rounded-lg p-3 border border-primary/20 shadow-sm">
                                             <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-rose-400 to-pink-500 text-white font-black text-lg flex items-center justify-center shadow-lg border-2 border-white ring-2 ring-rose-400/30">R</span>
-                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Relevant:</span> Phù hợp với chiến lược chất lượng và thương hiệu của công ty</p>
+                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Relevant:</span> Phù hợp chiến lược chất lượng & thương hiệu, sẵn sàng chuẩn hóa thành module áp dụng cho model tương đương.</p>
                                         </div>
                                         <div class="flex items-start gap-4 bg-white rounded-lg p-3 border border-primary/20 shadow-sm">
                                             <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 text-white font-black text-lg flex items-center justify-center shadow-lg border-2 border-white ring-2 ring-purple-400/30">T</span>
-                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Time-bound:</span> Có kế hoạch cụ thể trong 6 tháng.</p>
+                                            <p class="text-gray-700 text-sm leading-relaxed pt-2 font-medium"><span class="font-bold text-gray-900">Time-bound:</span> Hoàn thành trong 6 tháng (yêu cầu → thử nghiệm → chốt phương án → prototype & báo cáo).</p>
                                         </div>
                                     </div>
                                 </div>
@@ -613,56 +631,13 @@
 </div>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
-                <div class="lg:col-span-7 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-300 p-10 relative overflow-hidden">
-<div class="relative w-full aspect-square max-w-md flex items-center justify-center z-10">
-                        <!-- Vòng tròn ngoài cùng - Nền tảng khác -->
-                        <div class="absolute w-full h-full rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center">
-                            <span class="absolute top-2 left-1/2 -translate-x-1/2 text-sm font-bold uppercase tracking-wider text-gray-700 whitespace-nowrap bg-white/90 px-3 py-1 rounded-full shadow-sm">Nền tảng khác / Hệ thống RO</span>
-                            <!-- 4 ảnh máy khác xung quanh -->
-                            <div class="absolute top-8 left-8 w-24 h-32 rounded-lg border-2 border-gray-300 bg-white shadow-md z-10 p-2 flex items-center justify-center">
-                                <img src="https://drive.google.com/thumbnail?id=15QLB477n1yNxVkhjILW_SPTcNf-wO_Gm&sz=w400" alt="Máy ngoài phạm vi 1" class="max-w-full max-h-full object-contain" id="machine-out-1" onload="this.style.display='block'; this.parentElement.querySelector('.placeholder').style.display='none';" onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=15QLB477n1yNxVkhjILW_SPTcNf-wO_Gm';" style="display: none;" />
-                                <div class="placeholder absolute inset-0 w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
-                                    <span class="text-gray-400 text-[10px]">Ảnh 1</span>
-                                </div>
-                            </div>
-                            <div class="absolute top-8 right-8 w-24 h-32 rounded-lg border-2 border-gray-300 bg-white shadow-md z-10 p-2 flex items-center justify-center">
-                                <img src="https://drive.google.com/thumbnail?id=1MPhgjDWnz-WV7MzEBEjsst0263Fp20PX&sz=w400" alt="Máy ngoài phạm vi 2" class="max-w-full max-h-full object-contain" id="machine-out-2" onload="this.style.display='block'; this.parentElement.querySelector('.placeholder').style.display='none';" onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=1MPhgjDWnz-WV7MzEBEjsst0263Fp20PX';" style="display: none;" />
-                                <div class="placeholder absolute inset-0 w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
-                                    <span class="text-gray-400 text-[10px]">Ảnh 2</span>
-                                </div>
-                            </div>
-                            <div class="absolute bottom-8 left-8 w-24 h-32 rounded-lg border-2 border-gray-300 bg-white shadow-md z-10 p-2 flex items-center justify-center">
-                                <img src="https://drive.google.com/thumbnail?id=1dclLJc1Hkfm2jwZGmhJg8G6C8gw44C8S&sz=w400" alt="Máy ngoài phạm vi 3" class="max-w-full max-h-full object-contain" id="machine-out-3" onload="this.style.display='block'; this.parentElement.querySelector('.placeholder').style.display='none';" onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=1dclLJc1Hkfm2jwZGmhJg8G6C8gw44C8S';" style="display: none;" />
-                                <div class="placeholder absolute inset-0 w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
-                                    <span class="text-gray-400 text-[10px]">Ảnh 3</span>
-                                </div>
-                            </div>
-                            <div class="absolute bottom-8 right-8 w-24 h-32 rounded-lg border-2 border-gray-300 bg-white shadow-md z-10 p-2 flex items-center justify-center">
-                                <img src="https://drive.google.com/thumbnail?id=1n5phGmFzn6bqjfbqUbVcmGFIwQ3sZ9fE&sz=w400" alt="Máy ngoài phạm vi 4" class="max-w-full max-h-full object-contain" id="machine-out-4" onload="this.style.display='block'; this.parentElement.querySelector('.placeholder').style.display='none';" onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=1n5phGmFzn6bqjfbqUbVcmGFIwQ3sZ9fE';" style="display: none;" />
-                                <div class="placeholder absolute inset-0 w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
-                                    <span class="text-gray-400 text-[10px]">Ảnh 4</span>
-                                </div>
-                            </div>
-</div>
-                        <!-- Vòng tròn giữa - Hệ sinh thái M25 -->
-<div class="absolute w-[75%] h-[75%] rounded-full border border-primary/30 bg-primary/5 flex items-center justify-center">
-<span class="absolute top-4 left-1/2 -translate-x-1/2 text-sm font-bold uppercase tracking-wider text-primary bg-white/90 px-4 py-1.5 rounded-full shadow-sm whitespace-nowrap">Hệ sinh thái M25</span>
-</div>
-                        <!-- Vòng tròn trong cùng - Ảnh M25 ở giữa -->
-                        <div class="absolute w-[45%] h-[45%] rounded-full bg-white shadow-[0_0_60px_rgba(56,189,248,0.4)] flex flex-col items-center justify-center text-center p-4 border-4 border-primary overflow-hidden">
-                            <img 
-                                src="" 
-                                alt="Máy lọc nước M25" 
-                                class="w-full h-full object-contain"
-                                style="border-radius: 50%; display: none;"
-                            />
-                            <div id="m25-fallback" class="w-full h-full flex flex-col items-center justify-center bg-primary/10 rounded-full">
-                                <span class="material-symbols-outlined text-primary text-sm mb-2">water_drop</span>
-                                <p class="text-primary font-bold text-[10px] leading-tight uppercase tracking-tight">M25</p>
-                                <p class="text-gray-500 text-[10px] mt-2 text-center px-2">Đang tải ảnh...</p>
-                            </div>
-</div>
-</div>
+                <div class="lg:col-span-7 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-300 p-10 relative overflow-hidden min-h-[320px]">
+                        <img 
+                            src="https://drive.google.com/thumbnail?id=1uI5u62PFD7bH6GH5vQx-mQWlWq9pb1Tm&sz=w1200" 
+                            alt="Phạm vi & Đối tượng M25" 
+                            class="w-auto h-auto max-h-[400px] object-contain rounded-xl shadow-lg"
+                            onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=1uI5u62PFD7bH6GH5vQx-mQWlWq9pb1Tm';"
+                        />
 </div>
 <div class="lg:col-span-5 flex flex-col gap-4">
                     <div class="flex gap-4 rounded-xl border border-gray-300 glass-panel p-6 hover:border-primary/50 transition-all group cursor-default">
@@ -671,7 +646,8 @@
 </div>
 <div class="flex flex-col gap-1">
                             <h2 class="text-gray-900 text-2xl font-bold leading-tight">Đối tượng M25</h2>
-                            <p class="text-gray-600 text-sm font-normal leading-relaxed">Tập trung trọng tâm vào dòng sản phẩm <span class="text-primary font-semibold">M25</span>.</p>
+                            <p class="text-gray-600 text-sm font-normal leading-relaxed"><span class="text-primary font-semibold">Dòng máy M25</span> </p>
+                            <p class="text-gray-600 text-sm font-normal leading-relaxed mt-1">Tập trung chuỗi sau màng RO đến vòi – nơi dễ tái nhiễm vi sinh.</p>
 </div>
 </div>
                     <div class="flex gap-4 rounded-xl border border-gray-300 glass-panel p-6 hover:border-primary/50 transition-all group cursor-default">
@@ -680,7 +656,12 @@
 </div>
 <div class="flex flex-col gap-1">
                             <h2 class="text-gray-900 text-2xl font-bold leading-tight">Phạm vi</h2>
-                            <p class="text-gray-600 text-sm font-normal leading-relaxed">Tập trung vào các bộ phận có nguy cơ vi sinh cao nhất 
+                            <p class="text-gray-600 text-sm font-semibold mb-2">Các điểm rủi ro vi sinh cao nhất:</p>
+                            <ul class="text-gray-600 text-sm font-normal leading-relaxed space-y-1 list-disc list-inside">
+                                <li>Bình chứa (nắp, thành bình, vùng nước tĩnh)</li>
+                                <li>Đường ống sau màng RO / sau cụm lõi chức năng</li>
+                                <li>Vòi & đầu ra nước (đầu vòi/van/đầu nối)</li>
+                            </ul>
 </div>
 </div>
                     <div class="flex gap-4 rounded-xl border border-red-300 bg-red-50 p-6 hover:border-red-400 transition-all group border-dashed">
@@ -689,7 +670,11 @@
 </div>
 <div class="flex flex-col gap-1">
                             <h2 class="text-gray-900 text-2xl font-bold leading-tight">Định hướng</h2>
-                            <p class="text-gray-600 text-sm font-normal leading-relaxed">Chuẩn hóa nền tảng công nghệ dùng chung cho nhiều dòng máy.</p>
+                            <p class="text-gray-600 text-sm font-semibold mb-2">Module Anti-Infection dùng chung</p>
+                            <ul class="text-gray-600 text-sm font-normal leading-relaxed space-y-1 list-disc list-inside">
+                                <li>Thiết kế theo "module" để nhân rộng cho nhiều model</li>
+                                <li>Ưu tiên giải pháp an toàn vật liệu tiếp xúc nước + dễ tích hợp + dễ kiểm soát chất lượng</li>
+                            </ul>
 </div>
 </div>
 </div>
@@ -730,7 +715,6 @@
                         <div class="flex flex-col items-center text-center">
                             <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-sm shadow-lg mb-3">1</div>
                             <h3 class="text-gray-900 text-xl font-bold mb-2">Xác định vấn đề và điểm rủi ro cao</h3>
-                            <p class="text-primary text-base font-semibold mb-2">(tuần 1-tuần 3)</p>
                             <p class="text-gray-600 text-base leading-relaxed">Phân tích toàn bộ sơ đồ nước và quy trình sản xuất M25</p>
                         </div>
                         <div class="hidden lg:block absolute top-16 -right-2 z-20">
@@ -743,7 +727,6 @@
                         <div class="flex flex-col items-center text-center">
                             <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-sm shadow-lg mb-3">2</div>
                             <h3 class="text-gray-900 text-xl font-bold mb-2">Phân tích hiện trạng và dữ liệu</h3>
-                            <p class="text-primary text-base font-semibold mb-2">(tuần 3-tuần 5)</p>
                             <p class="text-gray-600 text-base leading-relaxed">Đánh giá các điều kiện sản xuất, sử dụng, làm rõ nguyên nhân gốc</p>
                         </div>
                         <div class="hidden lg:block absolute top-16 -right-2 z-20">
@@ -756,7 +739,6 @@
                         <div class="flex flex-col items-center text-center">
                             <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-sm shadow-lg mb-3">3</div>
                             <h3 class="text-gray-900 text-xl font-bold mb-2">Đề xuất giải pháp</h3>
-                            <p class="text-primary text-base font-semibold mb-2">(tuần 5-tuần 6)</p>
                             <p class="text-gray-600 text-base leading-relaxed">So sánh công nghệ trên thị trường → Đề xuất giải pháp phù hợp</p>
                         </div>
                         <div class="hidden lg:block absolute top-16 -right-2 z-20">
@@ -769,7 +751,6 @@
                         <div class="flex flex-col items-center text-center">
                             <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-sm shadow-lg mb-3">4</div>
                             <h3 class="text-gray-900 text-xl font-bold mb-2">Thiết kế và thử nghiệm</h3>
-                            <p class="text-primary text-base font-semibold mb-2">(tuần 6-tuần 10)</p>
                             <p class="text-gray-600 text-base leading-relaxed">Thiết kế mô hình A-I tích hợp, triển khai thực nghiệm trên sản phẩm thực tế</p>
                         </div>
                         <div class="hidden lg:block absolute top-16 -right-2 z-20">
@@ -782,7 +763,6 @@
                         <div class="flex flex-col items-center text-center">
                             <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-sm shadow-lg mb-3">5</div>
                             <h3 class="text-gray-900 text-xl font-bold mb-2">Đánh giá tối ưu và chuẩn hóa</h3>
-                            <p class="text-primary text-base font-semibold mb-2">(tuần 10-tuần 24)</p>
                             <p class="text-gray-600 text-base leading-relaxed">Đánh giá kết quả theo tiêu chí vi sinh. Tối ưu giải pháp, chuẩn hóa quy trình và nền tảng công nghệ</p>
                         </div>
                     </div>
@@ -791,7 +771,7 @@
             
             <!-- Phần So sánh nhanh các công nghệ -->
             <div class="mt-6">
-                <h2 class="text-gray-900 text-2xl font-bold mb-4">Các công nghệ trên thị trường</h2>
+                <h2 class="text-gray-900 text-2xl font-bold mb-4">Các công nghệ đang được nghiên cứu</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
                     <a href="https://drive.google.com/file/d/1J6Je4FkQiRKHpIVvO__20iVUkjAShcBs/view?usp=drive_link" target="_blank" class="glass-panel rounded-lg p-4 border border-gray-200 hover:border-primary/50 transition-all text-center cursor-pointer hover:shadow-md">
                         <h3 class="text-gray-900 font-bold text-sm flex items-center justify-center gap-2">
@@ -862,111 +842,172 @@
             <div class="space-y-6">
                 <div class="glass-panel rounded-xl p-6 border border-gray-200">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Phương án 1: LÁ CHẮN KÉP -->
-                        <div class="relative bg-white rounded-2xl border-2 border-primary shadow-lg overflow-hidden flex flex-col">
+                        <!-- Phương án 1: NGẮN HẠN -->
+                        <div class="phuong-an-card relative bg-white rounded-2xl border border-gray-200 shadow-md overflow-hidden flex flex-col transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 hover:border-primary hover:ring-4 hover:ring-primary/30 cursor-pointer" onclick="openPhuongAnModal(this)">
                             <div class="p-6 flex-1">
-                                <h2 class="text-base font-bold text-gray-900 mb-4 uppercase leading-tight">
-                                    PHƯƠNG ÁN 1:<br/><span class="text-primary">"LÁ CHẮN KÉP"</span>
+                                <h2 class="text-base font-bold text-gray-900 mb-4 leading-tight">
+                                    <span class="text-primary uppercase">Phương án Ngắn hạn</span><br>
+                                    <span class="text-gray-700 font-normal normal-case">"Lá chắn tiên phong"</span>
                                 </h2>
-                                <div class="bg-gray-50 rounded-xl mb-4 p-4 aspect-[4/3] flex items-center justify-center border border-gray-200">
+                                <div class="bg-gray-50 rounded-xl mb-4 p-4 aspect-[4/3] flex items-center justify-center border border-gray-200 min-h-[140px] overflow-hidden">
                                     <img 
-                                        alt="Sơ đồ phương án lá chắn kép với màng lọc và đèn UVC" 
-                                        class="rounded-lg object-contain w-full h-full" 
-                                        src="https://drive.google.com/thumbnail?id=19HhGDVXNOYHgECAkGpYEB-xfQHq2vZsW&sz=w1200"
-                                        onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=19HhGDVXNOYHgECAkGpYEB-xfQHq2vZsW';"
+                                        src="https://drive.google.com/thumbnail?id=16AP5bFXv9ngA2i1SvU3xhNoBGSCQ4rli&sz=w1200" 
+                                        alt="Phương án Ngắn hạn - UV + UF + KDF" 
+                                        class="rounded-lg object-contain w-full h-full"
+                                        onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=16AP5bFXv9ngA2i1SvU3xhNoBGSCQ4rli';"
                                     />
                                 </div>
-                                <div class="space-y-3 text-sm">
-                                    <div>
-                                        <p class="font-bold text-gray-900">Cấu hình:</p>
-                                        <p class="text-gray-600">Màng UF + UVC + sục rửa tự động</p>
+                                <div class="space-y-2 text-sm phuong-an-card-content">
+                                    <p class="text-gray-600"><span class="font-bold text-gray-900">Cấu hình:</span> Đèn UV (inline) + Màng UF 0.2 µm + Hạt KDF (bổ trợ)</p>
+                                    <div class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0 mt-0.5 text-base">check_circle</span>
+                                        <p class="text-gray-600"><span class="font-bold text-gray-900">Ưu điểm:</span> Lắp nhanh, hiệu quả thấy ngay; tăng lớp bảo vệ tại đầu ra</p>
                                     </div>
                                     <div class="flex items-start gap-2">
-                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0">check_circle</span>
+                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0 mt-0.5 text-base">warning</span>
+                                        <p class="text-gray-600"><span class="font-bold text-gray-900">Nhược điểm:</span> Phụ thuộc linh kiện mua ngoài; UV cần quản lý tuổi thọ</p>
+                                    </div>
+                                </div>
+                                <div class="hidden phuong-an-full-content space-y-3 text-sm">
+                                    <div>
+                                        <p class="font-bold text-gray-900 mb-1">Cấu hình:</p>
+                                        <p class="text-gray-600 leading-relaxed">Đèn UV (inline) + Màng UF 0.2 µm + Hạt KDF (bổ trợ)</p>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0 mt-0.5">check_circle</span>
                                         <div>
-                                            <p class="font-bold text-gray-900">Ưu điểm:</p>
-                                            <p class="text-gray-600 leading-relaxed">Hiệu quả diệt khuẩn cao, ổn định, phù hợp tiêu chuẩn quốc tế.</p>
+                                            <p class="font-bold text-gray-900 mb-1">Ưu điểm:</p>
+                                            <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                                <li>Lắp nhanh, hiệu quả thấy ngay, dễ kiểm chứng bằng test.</li>
+                                                <li>Tăng lớp bảo vệ tại "đầu ra" (sau màng RO → vòi), giảm rủi ro tái nhiễm.</li>
+                                            </ul>
                                         </div>
                                     </div>
                                     <div class="flex items-start gap-2">
-                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0">warning</span>
+                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0 mt-0.5">warning</span>
                                         <div>
-                                            <p class="font-bold text-gray-900">Nhược điểm:</p>
-                                            <p class="text-gray-600 leading-relaxed">Chỉ xử lý nước tại 1 điểm cục bộ, chưa giải quyết triệt để vấn đề.</p>
+                                            <p class="font-bold text-gray-900 mb-1">Nhược điểm:</p>
+                                            <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                                <li>Phụ thuộc linh kiện mua ngoài; tối ưu tích hợp không gian & sơ đồ điện cần thời gian.</li>
+                                                <li>UV cần quản lý tuổi thọ/giám sát hoạt động; KDF có giới hạn hiệu quả theo điều kiện vận hành.</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Phương án 2: PHÒNG TUYẾN THÔNG MINH -->
-                        <div class="bg-white rounded-2xl border border-gray-200 shadow-md overflow-hidden flex flex-col">
+                        <!-- Phương án 2: TRUNG HẠN -->
+                        <div class="phuong-an-card bg-white rounded-2xl border border-gray-200 shadow-md overflow-hidden flex flex-col transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 hover:border-primary hover:ring-4 hover:ring-primary/30 cursor-pointer" onclick="openPhuongAnModal(this)">
                             <div class="p-6 flex-1">
-                                <h2 class="text-base font-bold text-gray-900 mb-4 uppercase leading-tight">
-                                    PHƯƠNG ÁN 2:<br/><span class="text-primary">"PHÒNG TUYẾN THÔNG MINH"</span>
+                                <h2 class="text-base font-bold text-gray-900 mb-4 leading-tight">
+                                    <span class="text-primary uppercase">Phương án Trung hạn</span><br>
+                                    <span class="text-gray-700 font-normal normal-case">"Bức tường thép"</span>
                                 </h2>
-                                <div class="bg-gray-50 rounded-xl mb-4 p-4 aspect-[4/3] flex items-center justify-center border border-gray-200">
+                                <div class="bg-gray-50 rounded-xl mb-4 p-4 aspect-[4/3] flex items-center justify-center border border-gray-200 min-h-[140px] overflow-hidden">
                                     <img 
-                                        alt="Sơ đồ phương án phòng tuyến thông minh với công nghệ IonPure" 
-                                        class="rounded-lg object-contain w-full h-full" 
-                                        src="https://drive.google.com/thumbnail?id=1hDQLpSbA9UC1rHsv6-TSpDJksjJY1_ln&sz=w1200"
-                                        onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=1hDQLpSbA9UC1rHsv6-TSpDJksjJY1_ln';"
+                                        src="https://drive.google.com/thumbnail?id=19ffGybh6y-MElVwpSY3lp_fSVN9pNeK0&sz=w1200" 
+                                        alt="Phương án Trung hạn - Vật liệu kháng khuẩn + UF tự chủ + Sục rửa" 
+                                        class="rounded-lg object-contain w-full h-full"
+                                        onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=19ffGybh6y-MElVwpSY3lp_fSVN9pNeK0';"
                                     />
                                 </div>
-                                <div class="space-y-3 text-sm">
-                                    <div>
-                                        <p class="font-bold text-gray-900">Cấu hình:</p>
-                                        <p class="text-gray-600">Màng UF + vật liệu kháng khuẩn</p>
+                                <div class="space-y-2 text-sm phuong-an-card-content">
+                                    <p class="text-gray-600"><span class="font-bold text-gray-900">Cấu hình:</span> Vật liệu kháng khuẩn + Màng UF tự chủ + Sục rửa/flushing</p>
+                                    <div class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0 mt-0.5 text-base">check_circle</span>
+                                        <p class="text-gray-600"><span class="font-bold text-gray-900">Ưu điểm:</span> Kiểm soát chất lượng tốt hơn; hiệu quả bền hơn</p>
                                     </div>
                                     <div class="flex items-start gap-2">
-                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0">check_circle</span>
+                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0 mt-0.5 text-base">warning</span>
+                                        <p class="text-gray-600"><span class="font-bold text-gray-900">Nhược điểm:</span> Cần R&D/thẩm định vật liệu; phát sinh công việc thiết kế</p>
+                                    </div>
+                                </div>
+                                <div class="hidden phuong-an-full-content space-y-3 text-sm">
+                                    <div>
+                                        <p class="font-bold text-gray-900 mb-1">Cấu hình:</p>
+                                        <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                            <li>Vật liệu kháng khuẩn (ống/bình/chi tiết "điểm nóng")</li>
+                                            <li>Màng UF tự chủ (thiết kế/nguồn cung/đặc tính theo yêu cầu)</li>
+                                            <li>Sục rửa / flushing (giảm nước lưu – giảm tái nhiễm)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0 mt-0.5">check_circle</span>
                                         <div>
-                                            <p class="font-bold text-gray-900">Ưu điểm:</p>
-                                            <p class="text-gray-600 leading-relaxed">Tác động liên tục, không cần điện, chi phí vận hành thấp.</p>
+                                            <p class="font-bold text-gray-900 mb-1">Ưu điểm:</p>
+                                            <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                                <li>Kiểm soát chất lượng tốt hơn, giảm phụ thuộc NCC, tối ưu theo M25.</li>
+                                                <li>Hiệu quả bền hơn nhờ xử lý vào "gốc" (vật liệu + vận hành).</li>
+                                            </ul>
                                         </div>
                                     </div>
                                     <div class="flex items-start gap-2">
-                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0">warning</span>
+                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0 mt-0.5">warning</span>
                                         <div>
-                                            <p class="font-bold text-gray-900">Nhược điểm:</p>
-                                            <p class="text-gray-600 leading-relaxed">Các chất kháng khuẩn bị rửa trôi theo thời gian, có thể phôi nhiễm ra nước uống vượt ngưỡng cho phép.</p>
+                                            <p class="font-bold text-gray-900 mb-1">Nhược điểm:</p>
+                                            <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                                <li>Cần R&D/thẩm định vật liệu (an toàn tiếp xúc nước, độ bền, rủi ro phôi nhiễm).</li>
+                                                <li>Phát sinh công việc thiết kế/đánh giá độ tin cậy và tác động đến BOM.</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Phương án 3: PHÁO ĐÀI BẤT BẠI -->
-                        <div class="bg-white rounded-2xl border border-gray-200 shadow-md overflow-hidden flex flex-col">
+                        <!-- Phương án 3: DÀI HẠN -->
+                        <div class="phuong-an-card bg-white rounded-2xl border border-gray-200 shadow-md overflow-hidden flex flex-col transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 hover:border-primary hover:ring-4 hover:ring-primary/30 cursor-pointer" onclick="openPhuongAnModal(this)">
                             <div class="p-6 flex-1">
-                                <h2 class="text-base font-bold text-gray-900 mb-4 uppercase leading-tight">
-                                    PHƯƠNG ÁN 3:<br/><span class="text-primary">"PHÁO ĐÀI BẤT BẠI" (Hybrid)</span>
+                                <h2 class="text-base font-bold text-gray-900 mb-4 leading-tight">
+                                    <span class="text-primary uppercase">Phương án Dài hạn</span><br>
+                                    <span class="text-gray-700 font-normal normal-case">"Pháo đài bất bại"</span>
                                 </h2>
-                                <div class="bg-gray-50 rounded-xl mb-4 p-4 aspect-[4/3] flex items-center justify-center border border-gray-200">
+                                <div class="bg-gray-50 rounded-xl mb-4 p-4 aspect-[4/3] flex items-center justify-center border border-gray-200 min-h-[140px] overflow-hidden">
                                     <img 
-                                        alt="Sơ đồ hệ thống lọc Hybrid tổng hợp nhiều công nghệ" 
-                                        class="rounded-lg object-contain w-full h-full" 
-                                        src="https://drive.google.com/thumbnail?id=16aT5dwwUVjfXgQPAYt55ldVciN_2hj5g&sz=w1200"
-                                        onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=16aT5dwwUVjfXgQPAYt55ldVciN_2hj5g';"
+                                        src="https://drive.google.com/thumbnail?id=1-xcVOWP059fvo9-fV7oOWRV4emqA6qAh&sz=w1200" 
+                                        alt="Phương án Dài hạn - Module Anti-Infection chuẩn hóa" 
+                                        class="rounded-lg object-contain w-full h-full"
+                                        onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=1-xcVOWP059fvo9-fV7oOWRV4emqA6qAh';"
                                     />
                                 </div>
-                                <div class="space-y-3 text-sm">
-                                    <div>
-                                        <p class="font-bold text-gray-900">Cấu hình:</p>
-                                        <p class="text-gray-600">Kết hợp cả 2 Phương án trên + việc phát triển phương án  phòng sạch sản xuất</p>
+                                <div class="space-y-2 text-sm phuong-an-card-content">
+                                    <p class="text-gray-600"><span class="font-bold text-gray-900">Cấu hình:</span> Kết hợp UV + UF/UF tự chủ + KDF + vật liệu kháng khuẩn + sục rửa; phòng sạch</p>
+                                    <div class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0 mt-0.5 text-base">check_circle</span>
+                                        <p class="text-gray-600"><span class="font-bold text-gray-900">Ưu điểm:</span> Bảo vệ toàn diện; tạo module Anti-Infection chuẩn hóa</p>
                                     </div>
                                     <div class="flex items-start gap-2">
-                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0">check_circle</span>
+                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0 mt-0.5 text-base">warning</span>
+                                        <p class="text-gray-600"><span class="font-bold text-gray-900">Nhược điểm:</span> Đầu tư cao; timeline dài</p>
+                                    </div>
+                                </div>
+                                <div class="hidden phuong-an-full-content space-y-3 text-sm">
+                                    <div>
+                                        <p class="font-bold text-gray-900 mb-1">Cấu hình:</p>
+                                        <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                            <li>Kết hợp toàn bộ giải pháp: UV + UF/UF tự chủ + KDF + vật liệu kháng khuẩn + sục rửa</li>
+                                            <li>Triển khai phòng sạch / kiểm soát vệ sinh lắp ráp cho cụm nước tinh khiết</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 font-bold shrink-0 mt-0.5">check_circle</span>
                                         <div>
-                                            <p class="font-bold text-gray-900">Ưu điểm:</p>
-                                            <p class="text-gray-600 leading-relaxed">Mức độ bảo vệ toàn diện và cao nhất.</p>
+                                            <p class="font-bold text-gray-900 mb-1">Ưu điểm:</p>
+                                            <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                                <li>Mức bảo vệ toàn diện nhất, giảm rủi ro tái nhiễm cả thiết kế lẫn sản xuất.</li>
+                                                <li>Tạo "module Anti-Infection" chuẩn hóa, mở rộng cho nhiều model.</li>
+                                            </ul>
                                         </div>
                                     </div>
                                     <div class="flex items-start gap-2">
-                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0">warning</span>
+                                        <span class="material-symbols-outlined text-amber-500 font-bold shrink-0 mt-0.5">warning</span>
                                         <div>
-                                            <p class="font-bold text-gray-900">Nhược điểm:</p>
-                                            <p class="text-gray-600 leading-relaxed">Chi phí vật tư (BOM) cao hơn.</p>
+                                            <p class="font-bold text-gray-900 mb-1">Nhược điểm:</p>
+                                            <ul class="text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
+                                                <li>Chi phí đầu tư cao, yêu cầu quy trình/đào tạo/giám sát nghiêm ngặt.</li>
+                                                <li>Timeline dài, cần kế hoạch triển khai chia nhỏ theo giai đoạn.</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -1084,91 +1125,29 @@
             </style>
             <div class="mb-8 flex items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-800 tracking-tight uppercase mb-2">Bảng tiến độ dự án DMAIC</h1>
-                    <p class="text-gray-500 font-medium">Lộ trình triển khai dự án cải tiến quy trình chuẩn hóa</p>
+                    <h1 class="text-3xl font-bold text-gray-800 tracking-tight uppercase mb-2">Tiến độ theo thành viên</h1>
+                    <p class="text-gray-500 font-medium">Kế hoạch tuần – Dự án Talent25 – Nhóm 5TING</p>
                 </div>
                 <div class="flex items-center gap-3 flex-shrink-0">
                     <a href="https://docs.google.com/spreadsheets/d/14fHdJcQuwmR6YoWum6wN4ZzpKqV-E5SVHv-bdSECg7M/edit?gid=215534393#gid=215534393" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all shadow-md hover:shadow-lg text-sm whitespace-nowrap">
                         <span class="material-symbols-outlined text-sm">link</span>
                         <span class="font-semibold">Kế hoạch chi tiết cho từng thành viên</span>
                     </a>
-                    <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 flex items-center gap-3 shadow-sm">
-                        <span class="text-sm text-gray-500">Tiến độ tổng thể:</span>
-                        <div class="w-32 bg-gray-100 rounded-full h-2">
-                            <div class="bg-primary h-2 rounded-full w-[10%]"></div>
-                        </div>
-                        <span class="font-bold text-gray-700 text-sm">10%</span>
-                    </div>
                 </div>
             </div>
-            <div class="grid grid-cols-5 gap-1 mb-12 h-14">
-                <a href="https://drive.google.com/file/d/1XLYdyaN9my_ZUfEW43I85OWiVnePix_d/view?usp=drive_link" target="_blank" class="chevron-path-first bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-md hover:bg-blue-700 transition-colors cursor-pointer">
-                    1. ĐỊNH NGHĨA (DEFINE)
-                </a>
-                <div class="chevron-path bg-teal-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
-                    2. ĐO LƯỜNG (MEASURE)
-                </div>
-                <div class="chevron-path bg-purple-500 flex items-center justify-center text-white font-bold text-sm shadow-md opacity-40">
-                    3. PHÂN TÍCH (ANALYZE)
-                </div>
-                <div class="chevron-path bg-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-md opacity-40">
-                    4. CẢI TIẾN (IMPROVE)
-                </div>
-                <div class="chevron-path-last bg-green-500 flex items-center justify-center text-white font-bold text-sm shadow-md opacity-40">
-                    5. KIỂM SOÁT (CONTROL)
-                </div>
+            <div id="slide7MemberCards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                <!-- Được render động từ MEMBER_TASKS_RAW -->
             </div>
-            <div class="grid grid-cols-5 gap-6">
-                <a href="https://drive.google.com/file/d/1XLYdyaN9my_ZUfEW43I85OWiVnePix_d/view?usp=drive_link" target="_blank" class="bg-white rounded-xl shadow-sm border-t-4 border-blue-600 p-6 flex flex-col h-full hover:shadow-md transition-all cursor-pointer hover:border-blue-700">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="p-3 bg-blue-50 rounded-xl text-blue-600">
-                            <span class="material-symbols-outlined text-sm">assignment_turned_in</span>
+            <div class="mt-6 flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <span class="text-sm text-gray-600 font-medium whitespace-nowrap">Tiến độ tổng thể:</span>
+                <div class="flex-1 relative overflow-visible">
+                    <div class="rounded-full h-4 overflow-visible" style="background: linear-gradient(to right, #fed7aa 0%, #fdba74 100%);">
+                        <div id="slide7TotalProgressBar" class="h-4 rounded-full transition-all duration-500 relative overflow-visible" style="width: 17%; background: linear-gradient(to right, #ea580c 0%, #f97316 50%, #fb923c 100%);">
+                            <span class="progress-flame absolute right-0 top-1/2 text-4xl -translate-y-1/2 translate-x-1/2 z-10 material-symbols-outlined" style="color: #ea580c; font-variation-settings: 'FILL' 1, 'wght' 400; text-shadow: 0 0 12px rgba(234,88,12,0.7), 0 0 20px rgba(249,115,22,0.4);">local_fire_department</span>
                         </div>
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 uppercase">Hoàn thành</span>
                     </div>
-                    <h2 class="text-lg font-bold text-gray-800 mb-1">Định nghĩa (Define)</h2>
-                    <p class="text-[10px] text-gray-400 font-semibold mb-6">Tuần 1 - Tuần 2</p>
-                </a>
-                <div class="bg-white rounded-xl shadow-md border-t-4 border-teal-500 p-6 flex flex-col h-full ring-1 ring-teal-100">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="p-3 bg-teal-50 rounded-xl text-teal-500">
-                            <span class="material-symbols-outlined text-sm">query_stats</span>
-                        </div>
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-100 text-teal-700 uppercase">Đang thực hiện</span>
-                    </div>
-                    <h2 class="text-lg font-bold text-gray-800 mb-1">Đo lường (Measure)</h2>
-                    <p class="text-[10px] text-gray-400 font-semibold mb-6">Tuần 3 - Tuần 5</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm border-t-4 border-purple-500 p-6 flex flex-col h-full">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="p-3 bg-purple-50 rounded-xl text-purple-500">
-                            <span class="material-symbols-outlined text-sm">psychology</span>
-                        </div>
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-500 uppercase">Kế hoạch</span>
-                    </div>
-                    <h2 class="text-lg font-bold text-gray-800 mb-1">Phân tích (Analyze)</h2>
-                    <p class="text-[10px] text-gray-400 font-semibold mb-6">Tuần 6 - Tuần 8</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm border-t-4 border-orange-500 p-6 flex flex-col h-full">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="p-3 bg-orange-50 rounded-xl text-orange-500">
-                            <span class="material-symbols-outlined text-sm">rocket_launch</span>
-                        </div>
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-500 uppercase">Kế hoạch</span>
-                    </div>
-                    <h2 class="text-lg font-bold text-gray-800 mb-1">Cải tiến (Improve)</h2>
-                    <p class="text-[10px] text-gray-400 font-semibold mb-6">Tuần 9 - Tuần 12</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm border-t-4 border-green-500 p-6 flex flex-col h-full">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="p-3 bg-green-50 rounded-xl text-green-500">
-                            <span class="material-symbols-outlined text-sm">verified</span>
-                        </div>
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-500 uppercase">Kế hoạch</span>
-                    </div>
-                    <h2 class="text-lg font-bold text-gray-800 mb-1">Kiểm soát (Control)</h2>
-                    <p class="text-[10px] text-gray-400 font-semibold mb-6">Sau tuần 12</p>
-                </div>
+                <span id="slide7TotalProgress" class="text-sm font-bold text-gray-800 whitespace-nowrap">16/92 công việc (17%)</span>
             </div>
             <div class="glass-panel rounded-xl p-6 border border-gray-200 mt-8">
                 <h2 class="text-gray-900 text-sm font-bold mb-4">Nguồn lực & Ngân sách</h2>
@@ -1198,8 +1177,8 @@
                     </div>
                 </div>
             </div>
-            <footer class="mt-12 border-t border-gray-200 pt-6 text-gray-400 text-[10px] flex justify-between">
-                <p>2026</p>
+            <footer class="mt-8 border-t border-gray-200 pt-6 text-gray-400 text-[10px] flex justify-between">
+                <p>Nguồn: Kế hoạch tuần – Dự án Talent25 – Nhóm 5TING </p>
                 <div class="flex gap-4 font-medium">
                     <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Hoàn thành</span>
                     <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-teal-500"></span> Đang thực hiện</span>
@@ -1338,23 +1317,26 @@
                     <div class="glass-panel rounded-xl p-6 border border-gray-200">
                         <h2 class="text-gray-900 text-xl font-bold mb-4 flex items-center gap-2">
                             <span class="material-symbols-outlined text-red-500">warning</span>
-                            Rủi ro chính
-                            </h2>
-                        <div class="space-y-4">
+                            Rủi ro & Kiểm soát
+                        </h2>
+                        <div class="space-y-6">
                             <div class="border-l-4 border-red-500 pl-4">
-                                <h3 class="text-gray-900 font-bold mb-1">Thời gian</h3>
-                                <p class="text-gray-600 text-sm">Thời gian thử nghiệm vi sinh kéo dài</p>
-</div>
+                                <h3 class="text-gray-900 font-bold mb-2">Rủi ro 1 — Thời gian thử nghiệm vi sinh kéo dài</h3>
+                                <p class="text-gray-600 text-sm mb-2"><span class="font-semibold text-gray-800">Tác động:</span> Trễ tiến độ 6 tháng, thiếu dữ liệu để chốt phương án.</p>
+                                <p class="text-gray-600 text-sm"><span class="font-semibold text-gray-800">Kiểm soát:</span> Chia kế hoạch test theo ngắn/trung/dài hạn để có kết quả từng giai đoạn đúng mốc, ưu tiên "quick-win" trước.</p>
+                            </div>
                             <div class="border-l-4 border-amber-500 pl-4">
-                                <h3 class="text-gray-900 font-bold mb-1">Công nghệ</h3>
-                                <p class="text-gray-600 text-sm">Tích hợp công nghệ mới có thể làm ảnh hưởng đến cấu trúc máy</p>
-</div>
+                                <h3 class="text-gray-900 font-bold mb-2">Rủi ro 2 — Dự án ảnh hưởng lớn đến cấu trúc/chi phí/BOM máy hiện tại</h3>
+                                <p class="text-gray-600 text-sm mb-2"><span class="font-semibold text-gray-800">Tác động:</span> Thiếu không gian lắp đặt, tăng BOM, ảnh hưởng thiết kế ban đầu (lưu lượng/điện/kết cấu).</p>
+                                <p class="text-gray-600 text-sm"><span class="font-semibold text-gray-800">Kiểm soát:</span> Review thiết kế theo mốc, xác định điểm giới hạn, tính toán chi phí tăng thêm và điều chỉnh sớm cho phù hợp.</p>
+                            </div>
                             <div class="border-l-4 border-amber-500 pl-4">
-                                <h3 class="text-gray-900 font-bold mb-1">Kiểm soát</h3>
-                                <p class="text-gray-600 text-sm">Hiệu quả của các linh kiện cần có tiêu chí kiểm soát cụ thể</p>
-</div>
-</div>
-                                            </div>
+                                <h3 class="text-gray-900 font-bold mb-2">Rủi ro 3 — Hiệu quả kháng khuẩn không ổn định theo thời gian</h3>
+                                <p class="text-gray-600 text-sm mb-2"><span class="font-semibold text-gray-800">Tác động:</span> Hiệu quả giảm sau khi sử dụng một thời gian, tăng rủi ro tái nhiễm/không đạt tiêu chuẩn.</p>
+                                <p class="text-gray-600 text-sm"><span class="font-semibold text-gray-800">Kiểm soát:</span> Chốt tiêu chuẩn nghiệm thu & đo lường khả năng duy trì hiệu quả. Thời gian thực hiện vượt khuôn khổ kế hoạch 6 tháng của dự án.</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="glass-panel rounded-xl p-6 border border-gray-200">
                         <h2 class="text-gray-900 text-xl font-bold mb-4 flex items-center gap-2">
                             <span class="material-symbols-outlined text-green-500">check_circle</span>
@@ -1538,9 +1520,60 @@
         </footer>
     </section>
 
+    <script src="member-tasks.js"></script>
     <script>
         let currentSlide = 1;
         const totalSlides = 11;
+
+        // Cấu hình thành viên cho Slide 7
+        const SLIDE7_MEMBERS = [
+            { name: 'Nguyễn Văn Linh', desc: 'Buồng sạch, lắp ráp M25', classes: { border: 'border-primary', icon: 'bg-primary/10 text-primary', badge: 'bg-primary/20 text-primary', bar: 'bg-primary' }, isLeader: true },
+            { name: 'Khương Đức Tình', desc: 'Nhựa & silicone kháng khuẩn', classes: { border: 'border-blue-600', icon: 'bg-blue-50 text-blue-600', badge: 'bg-blue-100 text-blue-700', bar: 'bg-blue-600' }, isLeader: false },
+            { name: 'Đào Hoàng Dương', desc: 'Ionpure, compound, vật liệu', classes: { border: 'border-teal-500', icon: 'bg-teal-50 text-teal-500', badge: 'bg-teal-100 text-teal-700', bar: 'bg-teal-500' }, isLeader: false },
+            { name: 'Nguyễn Thế Việt', desc: 'UVC, test kháng khuẩn', classes: { border: 'border-orange-500', icon: 'bg-orange-50 text-orange-500', badge: 'bg-orange-100 text-orange-700', bar: 'bg-orange-500' }, isLeader: false },
+            { name: 'Nguyễn Văn Hiếu', desc: 'UF, xả rửa, sơ đồ nguyên lý', classes: { border: 'border-green-500', icon: 'bg-green-50 text-green-500', badge: 'bg-green-100 text-green-700', bar: 'bg-green-500' }, isLeader: false }
+        ];
+
+        function getMemberProgress(memberName) {
+            if (typeof MEMBER_TASKS_RAW === 'undefined') return { completed: 0, total: 0, pct: 0 };
+            const tasks = MEMBER_TASKS_RAW.filter(r => r.col_4 === memberName && r.row_number > 3);
+            const completed = tasks.filter(t => t.col_6 === 'Hoàn thành').length;
+            const total = tasks.length;
+            const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+            return { completed, total, pct };
+        }
+
+        function renderSlide7FromData() {
+            const container = document.getElementById('slide7MemberCards');
+            const totalBar = document.getElementById('slide7TotalProgressBar');
+            const totalText = document.getElementById('slide7TotalProgress');
+            if (!container || typeof MEMBER_TASKS_RAW === 'undefined') return;
+
+            let totalCompleted = 0, totalAll = 0;
+            container.innerHTML = SLIDE7_MEMBERS.map(m => {
+                const { completed, total, pct } = getMemberProgress(m.name);
+                totalCompleted += completed;
+                totalAll += total;
+                const c = m.classes;
+                return '<div onclick="openMemberModal(\'' + m.name.replace(/'/g, "\\'") + '\')" class="member-card bg-white rounded-xl shadow-md border-t-4 ' + c.border + ' p-5 flex flex-col h-full hover:shadow-lg transition-all cursor-pointer relative">' +
+                    '<div class="flex items-center justify-between mb-3">' +
+                    '<div class="flex items-center gap-2">' +
+                    '<div class="p-2 ' + c.icon + ' rounded-lg"><span class="material-symbols-outlined text-base">' + (m.isLeader ? 'badge' : 'person') + '</span></div>' +
+                    (m.isLeader ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary text-white uppercase">Trưởng nhóm</span>' : '') +
+                    '</div>' +
+                    '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold ' + c.badge + '">' + completed + '/' + total + ' công việc</span>' +
+                    '</div>' +
+                    '<h2 class="text-base font-bold text-gray-800 mb-2">' + m.name + '</h2>' +
+                    '<p class="text-[10px] text-gray-500 mb-3">' + m.desc + '</p>' +
+                    '<div class="w-full bg-gray-100 rounded-full h-1.5 mt-auto">' +
+                    '<div class="' + c.bar + ' h-1.5 rounded-full transition-all duration-300" style="width:' + pct + '%"></div>' +
+                    '</div></div>';
+            }).join('');
+
+            const totalPct = totalAll > 0 ? Math.round((totalCompleted / totalAll) * 100) : 0;
+            if (totalBar) totalBar.style.width = totalPct + '%';
+            if (totalText) totalText.textContent = totalCompleted + '/' + totalAll + ' công việc (' + totalPct + '%)';
+        }
 
         function showSlide(n, skipAnimation = false) {
             const slides = document.querySelectorAll('.slide');
@@ -1616,6 +1649,10 @@
             }
             
             document.getElementById('current-slide').textContent = currentSlide;
+            
+            // Chỉ hiện nút "Xem video" ở slide 2
+            const youtubeBtn = document.getElementById('youtube-video-btn');
+            if (youtubeBtn) youtubeBtn.style.display = currentSlide === 2 ? 'flex' : 'none';
             
             // Smooth scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1719,6 +1756,10 @@
 
         // Load M25 image when page loads
         window.addEventListener('load', loadM25Image);
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSlide7FromData();
+        });
+
         // Also try when slide 4 becomes active
         document.addEventListener('DOMContentLoaded', () => {
             const slide4 = document.getElementById('slide-4');
@@ -1751,6 +1792,72 @@
             }
         }
 
+        // Modal Phương án giải pháp
+        function openPhuongAnModal(cardEl) {
+            const img = cardEl.querySelector('img');
+            const title = cardEl.querySelector('h2');
+            const content = cardEl.querySelector('.phuong-an-full-content');
+            if (!img || !title || !content) return;
+            document.getElementById('phuongAnModalTitle').innerHTML = title.innerHTML;
+            const modalImg = document.getElementById('phuongAnModalImg');
+            modalImg.src = img.src.replace('&sz=w1200', '&sz=w1600');
+            modalImg.alt = img.alt;
+            modalImg.onerror = function() { const m = img.src.match(/id=([^&]+)/); if(m) this.src = 'https://drive.google.com/uc?export=view&id=' + m[1]; };
+            const children = content.children;
+            document.getElementById('phuongAnModalCauHinh').innerHTML = children[0] ? children[0].outerHTML : '';
+            const uuNhuoc = document.getElementById('phuongAnModalUuNhuoc');
+            uuNhuoc.innerHTML = (children[1] ? children[1].outerHTML : '') + (children[2] ? children[2].outerHTML : '');
+            document.getElementById('phuongAnModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePhuongAnModal() {
+            const modal = document.getElementById('phuongAnModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Modal thành viên - chỉ đọc từ member-tasks.js
+        function openMemberModal(memberName) {
+            const tasks = typeof MEMBER_TASKS_RAW !== 'undefined' 
+                ? MEMBER_TASKS_RAW.filter(r => r.col_4 === memberName && r.row_number > 3)
+                : [];
+            const completed = tasks.filter(t => t.col_6 === 'Hoàn thành').length;
+            const total = tasks.length;
+            const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+            document.getElementById('memberModalTitle').textContent = memberName;
+            document.getElementById('memberModalSubtitle').textContent = memberName === 'Nguyễn Văn Linh' ? 'Trưởng nhóm • Kế hoạch tuần – Dự án Talent25' : 'Kế hoạch tuần – Dự án Talent25';
+            document.getElementById('memberModalProgress').textContent = completed + '/' + total + ' công việc (' + pct + '%)';
+            document.getElementById('memberModalProgressBar').style.width = pct + '%';
+            const listEl = document.getElementById('memberModalTaskList');
+            listEl.innerHTML = tasks.map((t) => {
+                let statusClass = 'bg-gray-100 text-gray-600';
+                let statusIcon = 'schedule';
+                if (t.col_6 === 'Hoàn thành') { statusClass = 'bg-blue-100 text-blue-700'; statusIcon = 'check_circle'; }
+                else if (t.col_6 === 'Đang thực hiện') { statusClass = 'bg-teal-100 text-teal-700'; statusIcon = 'progress_activity'; }
+                const w = (t.col_2 || '').toString();
+                const weekLabel = /^\d+$/.test(w) ? 'Tuần ' + w : (w || t.date || '-');
+                const dateLabel = t.date && String(t.date) !== weekLabel ? t.date : '';
+                const diengiai = t.col_7 ? '<div class="mt-2 pt-2 border-t border-gray-100"><p class="text-xs text-gray-500 leading-relaxed"><span class="font-medium text-gray-600">Diễn giải:</span> ' + t.col_7 + '</p></div>' : '';
+                return '<div class="flex gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:border-primary/30 hover:shadow-sm transition-all">' +
+                    '<div class="shrink-0 w-16 text-center"><span class="inline-block px-2 py-1 rounded-lg bg-primary/10 text-primary text-xs font-bold">' + weekLabel + '</span>' +
+                    (dateLabel ? '<p class="text-[10px] text-gray-500 mt-1">' + dateLabel + '</p>' : '') + '</div>' +
+                    '<div class="flex-1 min-w-0"><p class="font-semibold text-gray-800 text-sm leading-snug">' + (t.col_3 || '') + '</p>' + diengiai + '</div>' +
+                    '<div class="shrink-0 flex items-start"><span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-semibold ' + statusClass + '">' +
+                    '<span class="material-symbols-outlined text-sm">' + statusIcon + '</span>' + (t.col_6 || 'Chờ thực hiện') + '</span></div></div>';
+            }).join('');
+            document.getElementById('memberModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMemberModal() {
+            const modal = document.getElementById('memberModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
         // Close modal when clicking outside
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('budgetModal');
@@ -1766,10 +1873,80 @@
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeBudgetModal();
+                    closePhuongAnModal();
+                    closeMemberModal();
                 }
             });
         });
     </script>
+
+    <!-- Modal thành viên - Kế hoạch công việc -->
+    <div id="memberModal" class="modal-overlay" onclick="if(event.target===this)closeMemberModal()">
+        <div class="modal-content max-w-4xl w-[95%]" onclick="event.stopPropagation()">
+            <div class="modal-header bg-gradient-to-r from-primary/5 to-transparent">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-2xl">person</span>
+                    </div>
+                    <div>
+                        <h2 id="memberModalTitle" class="text-xl font-bold text-gray-900"></h2>
+                        <p id="memberModalSubtitle" class="text-xs text-gray-500 mt-0.5">Kế hoạch tuần – Dự án Talent25</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeMemberModal()" aria-label="Đóng">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Thanh tiến độ & Link -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-gray-50 rounded-xl mb-6">
+                    <div class="flex items-center gap-4 flex-1">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-semibold text-gray-700">Tiến độ</span>
+                                <span id="memberModalProgress" class="font-bold text-primary"></span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div id="memberModalProgressBar" class="bg-primary h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://docs.google.com/spreadsheets/d/14fHdJcQuwmR6YoWum6wN4ZzpKqV-E5SVHv-bdSECg7M/edit?gid=215534393#gid=215534393" target="_blank" class="inline-flex items-center gap-2 px-3 py-2 bg-white border border-primary/30 rounded-lg text-primary hover:bg-primary/5 transition-colors text-sm font-medium shrink-0">
+                        <span class="material-symbols-outlined text-base">open_in_new</span>
+                        Mở Google Sheets
+                    </a>
+                </div>
+                <!-- Chú thích trạng thái -->
+                <div class="flex flex-wrap gap-4 mb-4 text-xs">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Hoàn thành</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span> Đang thực hiện</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-gray-300"></span> Chờ thực hiện</span>
+                </div>
+                <!-- Danh sách công việc -->
+                <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-3">Danh sách công việc</h3>
+                <div id="memberModalTaskList" class="max-h-[50vh] overflow-y-auto space-y-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Phương án giải pháp -->
+    <div id="phuongAnModal" class="modal-overlay" onclick="if(event.target===this)closePhuongAnModal()">
+        <div class="modal-content max-w-6xl w-[95%]" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="phuongAnModalTitle" class="text-xl font-bold text-gray-900"></h2>
+                <button class="modal-close" onclick="closePhuongAnModal()" aria-label="Đóng">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    <div class="md:col-span-3 flex items-center justify-center bg-gray-50 rounded-xl p-6 border border-gray-200 min-h-[420px]">
+                        <img id="phuongAnModalImg" src="" alt="" class="max-w-full max-h-[480px] object-contain rounded-lg" />
+                    </div>
+                    <div class="md:col-span-2 flex flex-col gap-4 overflow-y-auto">
+                        <div id="phuongAnModalCauHinh" class="text-sm"></div>
+                        <div id="phuongAnModalUuNhuoc" class="space-y-3 text-sm border-t border-gray-200 pt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Budget Modal -->
     <div id="budgetModal" class="modal-overlay">
